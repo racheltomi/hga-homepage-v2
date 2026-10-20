@@ -1,0 +1,108 @@
+/* Site-wide micro-interactions (subtle). Pairs with motion.js.
+   Scoped to the HGA pages (html[data-theme]); story.html has its own motion system.
+   Hover lifts use the independent `translate` / `scale` properties so they compose with,
+   rather than fight, the .rv reveal transform and GSAP inline transforms. */
+
+:root{
+  --mx-ease:cubic-bezier(.2,.7,.2,1);
+  --mx-red-glow:0 14px 34px -8px rgba(230,36,41,.45);
+  --mx-soft-glow:0 12px 30px -10px rgba(255,255,255,.18);
+}
+
+/* ---------- 1. scroll reveal (only once motion.js has added html.mx) ---------- */
+html.mx .mx-r{opacity:0;transform:translate3d(0,14px,0)}
+html.mx .mx-r.in{
+  opacity:1;transform:none;
+  transition:opacity .6s var(--mx-ease) var(--mx-d,0s),transform .7s var(--mx-ease) var(--mx-d,0s);
+}
+
+/* ---------- 2a. buttons: lift, soft glow, arrow nudge ---------- */
+html[data-theme] .btn{
+  transition:background-color .2s ease,border-color .2s ease,color .2s ease,transform .15s ease,
+             translate .3s var(--mx-ease),box-shadow .35s var(--mx-ease);
+}
+html[data-theme] .btn .ico,html[data-theme] .btn svg{transition:transform .3s var(--mx-ease)}
+@media (hover:hover) and (pointer:fine){
+  html[data-theme] .btn:not(.is-off):hover{translate:0 -2px;box-shadow:var(--mx-red-glow)}
+  html[data-theme] .btn.ghost:not(.is-off):hover,
+  html[data-theme] .btn.dark:not(.is-off):hover{box-shadow:var(--mx-soft-glow)}
+  html[data-theme] .btn:not(.is-off):hover .ico{transform:translateX(3px)}
+  html[data-theme] .btn:not(.is-off):active{translate:0 0;transition-duration:.2s,.2s,.2s,.15s,.08s,.2s}
+  /* the header CTA stays put: only a glow */
+  html[data-theme] .hdr .btn:hover{translate:none}
+}
+
+/* ---------- 2b. cards: gentle lift + border brighten ---------- */
+html[data-theme] :is(.hz-card,.hm-plan,.ty-card,.tier,.rc,.stat,.usp,.bt,
+  .hw-nft-list>li,.hw-dec>li,.rv3-three>li,.gr-subs>div,.gr-how>div,.ps-steps>li,
+  .after5>li,.rebuilt>div,.pillars>div,.facts3>div,.inc-grid>div,.scale3>div,
+  .sg-notes>div,.auto3>li,.blind3>div,.pol>div,.hc-pics>figure,.px-glass){
+  transition:opacity .7s var(--mx-ease) var(--mx-d,0s),transform .7s var(--mx-ease) var(--mx-d,0s),
+             translate .45s var(--mx-ease),border-color .35s ease,box-shadow .45s var(--mx-ease),background-color .35s ease;
+}
+@media (hover:hover) and (pointer:fine){
+  html[data-theme] :is(.hz-card,.hm-plan,.ty-card,.tier,.rc,.stat,.usp,.bt,
+    .hw-nft-list>li,.hw-dec>li,.rv3-three>li,.gr-subs>div,.gr-how>div,.ps-steps>li,
+    .after5>li,.rebuilt>div,.pillars>div,.facts3>div,.inc-grid>div,.scale3>div,
+    .sg-notes>div,.auto3>li,.blind3>div,.pol>div,.hc-pics>figure,.px-glass):hover{
+    translate:0 -3px;
+    box-shadow:0 18px 40px -18px rgba(0,0,0,.7);
+  }
+  /* brighten the neutral borders; red-accented cards keep their red but go a touch stronger */
+  html[data-theme] :is(.hz-card:not(.hz-glass),.hm-plan:not(.glass),.ty-card,.tier,.rc,.stat,.usp,
+    .hw-nft-list>li:not(.hw-warn),.hw-dec>li,.rv3-three>li,.gr-subs>div,.gr-how>div:not(.warn),.ps-steps>li:not(.now),
+    .after5>li,.rebuilt>div,.pillars>div,.facts3>div,.inc-grid>div,.scale3>div,
+    .sg-notes>div,.auto3>li,.blind3>div,.pol>div):hover{border-color:rgba(255,255,255,.26)}
+  html[data-theme] :is(.hz-glass,.hm-plan.glass,.hw-warn,.gr-how>.warn,.ps-steps>li.now):hover{border-color:rgba(230,36,41,.85)}
+}
+
+/* ---------- 2c. images inside cards and frames: slow scale ---------- */
+html[data-theme] :is(.hc-pics>figure,.rc,.hm-plan,.gx-shelf>li,.hw-mo>li,.gal-photo,.px-media) img{
+  transition:scale .9s var(--mx-ease);
+}
+@media (hover:hover) and (pointer:fine){
+  html[data-theme] :is(.hc-pics>figure,.rc,.gx-shelf>li,.hw-mo>li,.gal-photo):hover img,
+  html[data-theme] .px-glass:hover .px-media img,
+  html[data-theme] .hm-plan:hover>img{scale:1.03}
+  html[data-theme] .hm-plan:hover .hm-wm{scale:1}
+}
+
+/* ---------- 2d. text links: underline grows from the left ---------- */
+html[data-theme] :is(main p a:not([class]),.faq .a a,.foot a:not([class]),.hm-fine a,.fine a){
+  background-image:linear-gradient(var(--red,#E62429),var(--red,#E62429));
+  background-repeat:no-repeat;background-position:0 100%;background-size:0 1.5px;
+  transition:background-size .4s var(--mx-ease),color .2s ease,text-decoration-color .25s ease;
+}
+@media (hover:hover){
+  html[data-theme] :is(main p a:not([class]),.faq .a a,.foot a:not([class]),.hm-fine a,.fine a):hover{
+    background-size:100% 1.5px;text-decoration-color:transparent;
+  }
+}
+html[data-theme] :is(main p a:not([class]),.faq .a a,.foot a:not([class]),.hm-fine a,.fine a):focus-visible{background-size:100% 1.5px}
+
+/* ---------- 2e. FAQ <details>: smooth open (height animated by motion.js) ---------- */
+html.mx details.mx-acc.mx-anim{overflow:hidden}
+html.mx details.mx-acc>summary~*{transition:opacity .35s var(--mx-ease),transform .4s var(--mx-ease)}
+html.mx details.mx-acc.mx-closing>summary~*{opacity:0;transform:translate3d(0,-4px,0)}
+html.mx details.mx-acc.mx-opening>summary~*{opacity:0;transform:translate3d(0,-6px,0);transition:none}
+
+/* ---------- 3. header: firmer once the page has scrolled ---------- */
+html[data-theme] .hdr{transition:background-color .35s ease,box-shadow .45s var(--mx-ease),border-color .35s ease}
+html[data-theme] .hdr.mx-scrolled{background-color:rgba(251,250,247,.9);box-shadow:0 10px 30px -18px rgba(0,0,0,.35)}
+html[data-theme="dark"] .hdr.mx-scrolled{background-color:rgba(11,10,10,.9);border-bottom-color:rgba(255,255,255,.1);box-shadow:0 12px 32px -16px rgba(0,0,0,.75)}
+
+/* ---------- 4. focus stays obvious ---------- */
+html[data-theme] .btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+
+/* ---------- 5. reduced motion: no movement, everything visible ---------- */
+@media (prefers-reduced-motion:reduce){
+  html.mx .mx-r,html.mx .mx-r.in{opacity:1;transform:none;transition:none}
+  html[data-theme] .btn:hover,html[data-theme] .btn:active,
+  html[data-theme] :is(.hz-card,.hm-plan,.ty-card,.tier,.rc,.stat,.usp,.bt,
+    .hw-nft-list>li,.hw-dec>li,.rv3-three>li,.gr-subs>div,.gr-how>div,.ps-steps>li,
+    .after5>li,.rebuilt>div,.pillars>div,.facts3>div,.inc-grid>div,.scale3>div,
+    .sg-notes>div,.auto3>li,.blind3>div,.pol>div,.hc-pics>figure,.px-glass):hover{translate:none}
+  html[data-theme] .btn:hover .ico{transform:none}
+  html[data-theme] img{scale:none!important}
+  html.mx details.mx-acc>summary~*{transition:none;opacity:1;transform:none}
+}

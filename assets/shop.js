@@ -232,7 +232,7 @@
     $$("[data-o-gift]").forEach(function (e) { e.hidden = !o.gift; });
     set("[data-o-gift-email]", o.gift);
 
-    // one pass card per card bought, up to 6 shown
+    // one slot card per card bought, up to 6 shown
     var tpl = $("[data-pass-tpl]"), wall = $("[data-pass-wall]"), more = $("[data-pass-more]");
     if (tpl && wall) {
       // show a mix when both housings were bought: up to 3 of each, then fill
@@ -249,11 +249,11 @@
         $("[data-pass-logo]", el).src = h === "glass" ? "./assets/hybrid_grading/hga-glass-828ebfd2.svg" : "./assets/hybrid_grading/hga-poly-69885480.svg";
         $("[data-pass-logo]", el).alt = PRICES[h].name;
         var code = o.num.replace("HGA-", "") + "-" + String(k + 1).padStart(3, "0");
-        $("[data-pass-code]", el).textContent = "PASS " + code;
+        $("[data-pass-code]", el).textContent = "SLOT " + code;
         el.style.setProperty("--i", k);
         wall.insertBefore(el, more || null);
       });
-      if (more) { more.hidden = total <= 6; more.textContent = "+" + (total - 6) + " more in My Passes"; }
+      if (more) { more.hidden = total <= 6; more.textContent = "+" + (total - 6) + " more in My Slots"; }
     }
 
     // a calendar reminder for the day booking opens
@@ -261,9 +261,9 @@
     if (ics) {
       var body = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//HGA//Presale//EN", "BEGIN:VEVENT",
         "UID:hga-calendar-opens-2027@hybridgrading.com", "DTSTAMP:20261101T000000Z",
-        "DTSTART;VALUE=DATE:20270201", "DTEND;VALUE=DATE:20270202",
+        "DTSTART;VALUE=DATE:20270118", "DTEND;VALUE=DATE:20270119",
         "SUMMARY:HGA grading calendar opens: reserve your grading day",
-        "DESCRIPTION:Your HGA passes are ready to book. Reserve any open day up to a year ahead from My Passes.",
+        "DESCRIPTION:Your HGA slots are ready to book. Pick your grading date on the HGA Grading Calendar. Grading begins Feb 1.",
         "END:VEVENT", "END:VCALENDAR"].join("\r\n");
       try { ics.href = URL.createObjectURL(new Blob([body], { type: "text/calendar" })); } catch (e) {}
     }

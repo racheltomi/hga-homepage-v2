@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>How blind grading works | HGA Knowledge base</title>
+<meta name="description" content="Graded blind, to a published standard, then audited. What that means for your card.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0E0E0E">
+<link rel="preload" href="./assets/fonts/bc-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./assets/hga.css?v=80e4d4a7">
+<link rel="stylesheet" href="./assets/v2.css?v=80e4d4a7">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="./assets/v2.js?v=80e4d4a7"></script>
+<script defer src="./assets/site.js?v=80e4d4a7"></script>
+<script defer src="./assets/shop.js?v=80e4d4a7"></script>
+<link rel="stylesheet" href="./assets/motion.css">
+<script defer src="./assets/motion.js"></script>
+
+<style>
+/* Knowledge base: blog index + article pages */
+.kb-hero{padding-bottom:clamp(20px,3vw,32px)}
+.kb-hero .lede{max-width:620px}
+.kb-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin:0 0 clamp(24px,3vw,36px)}
+.kb-cats{display:flex;flex-wrap:wrap;gap:8px}
+.kb-cats button{font:inherit;font-size:14px;font-weight:600;color:rgba(255,255,255,.75);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .25s,border-color .25s,color .25s}
+.kb-cats button:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.kb-cats button[aria-pressed="true"]{background:#E62429;border-color:#E62429;color:#fff}
+.kb-search{position:relative;flex:0 1 280px}
+.kb-search input{width:100%;font:inherit;font-size:15px;color:#fff;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:10px 16px 10px 40px}
+.kb-search input:focus{outline:2px solid #ff4a44;outline-offset:2px}
+.kb-search svg{position:absolute;left:14px;top:50%;width:16px;height:16px;transform:translateY(-50%);opacity:.6}
+.kb-feat{display:grid;grid-template-columns:1.25fr 1fr;border-radius:26px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#141212;text-decoration:none;color:inherit;margin-bottom:clamp(18px,2vw,26px);transition:border-color .35s}
+.kb-feat:hover{border-color:rgba(230,36,41,.45)}
+.kb-feat .kb-img{aspect-ratio:16/10}
+.kb-feat .kb-txt{padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;justify-content:center;gap:12px}
+.kb-feat h2{margin:0;font-size:clamp(26px,calc(.76vw + 23px),34px);line-height:1.12;letter-spacing:-.02em}
+.kb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px)}
+.kb-card{display:flex;flex-direction:column;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#141212;text-decoration:none;color:inherit;transition:border-color .35s,transform .45s cubic-bezier(.2,.7,.2,1)}
+.kb-card:hover{border-color:rgba(230,36,41,.45);transform:translateY(-4px)}
+.kb-img{position:relative;overflow:hidden;aspect-ratio:16/10;background:#0c0b0b}
+.kb-img img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.7,.2,1);filter:brightness(.9)}
+.kb-card:hover .kb-img img,.kb-feat:hover .kb-img img{transform:scale(1.05)}
+.kb-txt{padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.kb-meta{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.55)}
+.kb-cat{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#ff4a44}
+.kb-card h3{margin:0;font-size:clamp(18px,calc(.19vw + 17.3px),20px);line-height:1.25}
+.kb-txt p{margin:0;font-size:15.5px;line-height:1.5;color:rgba(255,255,255,.7)}
+.kb-read{margin-top:auto;padding-top:6px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;opacity:.7;transition:opacity .3s}
+.kb-read svg{width:15px;height:15px;transition:transform .3s}
+.kb-card:hover .kb-read,.kb-feat:hover .kb-read{opacity:1}
+.kb-card:hover .kb-read svg,.kb-feat:hover .kb-read svg{transform:translateX(4px)}
+.kb-empty{padding:40px 0;text-align:center;color:rgba(255,255,255,.6)}
+@media (max-width:980px){.kb-grid{grid-template-columns:1fr 1fr}.kb-feat{grid-template-columns:1fr}}
+@media (max-width:620px){.kb-grid{grid-template-columns:1fr}.kb-search{flex-basis:100%}}
+/* article */
+.kb-art{max-width:760px;margin:0 auto}
+.kb-crumbs{display:flex;gap:8px;font-size:13px;color:rgba(255,255,255,.55);margin-bottom:18px}
+.kb-crumbs a{color:rgba(255,255,255,.75)}
+.kb-art .kb-title{font-size:clamp(30px,calc(1.6vw + 23.8px),46px)!important;line-height:1.08;margin:10px 0 14px}
+.kb-art .kb-sub{font-size:clamp(17px,calc(.29vw + 15.9px),20px);color:rgba(255,255,255,.72);margin:0 0 18px}
+.kb-cover{max-width:1080px;margin:clamp(24px,3vw,36px) auto 0;border-radius:26px;overflow:hidden;aspect-ratio:21/9;border:1px solid rgba(255,255,255,.08)}
+.kb-cover img{width:100%;height:100%;object-fit:cover}
+.kb-prose{max-width:720px;margin:clamp(28px,4vw,48px) auto 0;font-size:clamp(16px,calc(.1vw + 15.6px),17px);line-height:1.7;color:rgba(255,255,255,.82)}
+.kb-prose h2{font-size:clamp(22px,calc(.6vw + 19.6px),28px);line-height:1.2;letter-spacing:-.01em;color:#fff;margin:40px 0 10px}
+.kb-prose p{margin:0 0 16px}
+.kb-prose ul{margin:0 0 16px;padding-left:20px}
+.kb-prose li{margin:6px 0}
+.kb-prose a{color:#fff;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(230,36,41,.7)}
+.kb-scale{list-style:none;padding:0!important;border-top:1px solid rgba(255,255,255,.1)}
+.kb-scale li{display:grid;grid-template-columns:140px 1fr;gap:12px;margin:0!important;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.kb-scale b{color:#fff}
+.kb-note{padding:14px 18px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);font-size:15px}
+.kb-next{margin-top:28px!important}
+.kb-next a{display:inline-flex;align-items:center;gap:8px;font-weight:700;text-decoration:none!important;color:#ff6b6e!important}
+.kb-next a::after{content:"→"}
+.kb-rel{margin-top:clamp(56px,7vw,96px)}
+.kb-rel .h2{margin-bottom:24px}
+.kb-endcta{margin-top:clamp(48px,6vw,80px);padding:clamp(28px,4vw,44px);border-radius:26px;border:1px solid rgba(230,36,41,.4);background:radial-gradient(ellipse 70% 100% at 0 50%,rgba(230,36,41,.16),transparent 70%),#141212;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px}
+.kb-endcta b{display:block;font-size:clamp(22px,calc(.6vw + 19.6px),28px);color:#fff}
+.kb-endcta span{color:rgba(255,255,255,.7)}
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="12" cy="14.2" r="3.4"/><path d="M12 12.3v2l1.4 1"/></symbol><symbol id="i-layers" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8.2" y="10.2" width="3.3" height="3.3" rx=".6"/><rect x="12.5" y="10.2" width="3.3" height="3.3" rx=".6"/><rect x="8.2" y="14.5" width="3.3" height="3.3" rx=".6"/><rect x="12.5" y="14.5" width="3.3" height="3.3" rx=".6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.5 11h7M8.5 14h7M8.5 17h4"/></symbol><symbol id="i-camera" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="12.2" width="8" height="5.6" rx="1"/><circle cx="12" cy="15" r="1.5"/><path d="M10.3 12.2l.8-1.4h1.8l.8 1.4"/></symbol><symbol id="i-video" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="7.8" y="11.6" width="6.2" height="5" rx="1"/><path d="M14 13.2l3-1.4v4.6l-3-1.4"/></symbol><symbol id="i-eyeoff" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.3 14.2s1.5-2.6 3.7-2.6 3.7 2.6 3.7 2.6-1.5 2.6-3.7 2.6-3.7-2.6-3.7-2.6z"/><path d="M8.5 18l7-7.6"/></symbol><symbol id="i-chip" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="9.4" y="11.6" width="5.2" height="5.2" rx="1"/><path d="M9.4 13.2H8M9.4 15.2H8M14.6 13.2H16M14.6 15.2H16M11 11.6v-1.4M13 11.6v-1.4M11 16.8v1.4M13 16.8v1.4"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 10l3.4 1.4v2.6c0 2-1.4 3.5-3.4 4.4-2-.9-3.4-2.4-3.4-4.4v-2.6L12 10z"/><path d="M10.5 14.2l1 1 2.1-2.1"/></symbol><symbol id="i-box" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8.3" y="10.4" width="7.4" height="8.2" rx="1"/><rect x="10" y="12.2" width="4" height="4.6" rx=".6"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="11.2" width="8" height="7" rx="1"/><path d="M8 13.7h8M10.2 9.8v2.4M13.8 9.8v2.4"/></symbol><symbol id="i-truck" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M7.8 12h5.4v4.4H7.8zM13.2 13.6h2l1.4 1.5v1.3h-3.4z"/><circle cx="9.7" cy="17.6" r=".9"/><circle cx="14.6" cy="17.6" r=".9"/></symbol><symbol id="i-gift" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="12.4" width="8" height="2.2"/><path d="M9 14.6v3.8h6v-3.8M12 12.4v6M12 12.4c-.8-.6-2.6-.7-2.6-1.8S11.2 9.9 12 12.4zM12 12.4c.8-.6 2.6-.7 2.6-1.8S12.8 9.9 12 12.4z"/></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.5 12.2h5.5l-1.6-1.6M15.5 16h-5.5l1.6 1.6"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol><symbol id="i-award" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 10.3l1.15 2.25 2.5.35-1.8 1.75.45 2.5L12 15.95l-2.3 1.2.45-2.5-1.8-1.75 2.5-.35z"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.3 16.2c.9-3 1.9-3 2.4 0s1.5 0 2-3 1.6-1.6 2.6 1.2M8.3 18.3h7.4"/></symbol><symbol id="i-size" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8 11.3V9.8h1.5M16 11.3V9.8h-1.5M8 16.9v1.5h1.5M16 16.9v1.5h-1.5"/><rect x="10.4" y="12" width="3.2" height="4.2" rx=".6"/></symbol><symbol id="i-target" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="12" cy="14.2" r="3.2"/><circle cx="12" cy="14.2" r=".9" fill="currentColor" stroke="none"/><path d="M12 9.8v1.6M12 17v1.6M7.6 14.2h1.6M14.8 14.2h1.6"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/><circle cx="12" cy="15.5" r="1.2"/></symbol><symbol id="i-card" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8.4" y="10.6" width="7.2" height="3" rx=".5" fill="currentColor" stroke="none"/><path d="M8.4 16h7.2M8.4 18.2h4"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="11.4" width="8" height="6" rx="1"/><path d="M8.3 12.2l3.7 2.6 3.7-2.6"/></symbol><symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="9" y="10" width="6" height="8.6" rx="1.2"/><path d="M11 17h2"/></symbol><symbol id="i-image" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="10.8" width="8" height="7.4" rx="1"/><circle cx="10.3" cy="13" r=".9"/><path d="M16 16.2l-2.4-2.4-4 4"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5z"/></symbol><symbol id="i-pause" viewBox="0 0 24 24"><path d="M8.5 5.5v13M15.5 5.5v13"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8 14.2s1.6-2.6 4-2.6 4 2.6 4 2.6-1.6 2.6-4 2.6-4-2.6-4-2.6z"/><circle cx="12" cy="14.2" r="1.3" fill="currentColor" stroke="none"/></symbol><symbol id="i-database" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><ellipse cx="12" cy="11.6" rx="3.5" ry="1.3"/><path d="M8.5 11.6v5c0 .7 1.6 1.3 3.5 1.3s3.5-.6 3.5-1.3v-5"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="10.2" cy="12.4" r="1.5"/><circle cx="14.4" cy="12.8" r="1.1"/><path d="M7.6 18.2a2.6 2.6 0 015.2 0M13 18.2a1.9 1.9 0 013.4 0"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M15.5 14.2a3.5 3.5 0 01-6.2 2.2M8.5 14.2a3.5 3.5 0 016.2-2.2M8.5 11.2v2.4h2.4M15.5 17.2v-2.4h-2.4"/></symbol><symbol id="i-dollar" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 9.8v8.6M14 12.3c0-.8-.9-1.4-2-1.4s-2 .6-2 1.4c0 1.9 4 .9 4 2.8 0 .9-.9 1.5-2 1.5s-2-.6-2-1.4"/></symbol><symbol id="i-map" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 18.4s3-2.8 3-5.4a3 3 0 10-6 0c0 2.6 3 5.4 3 5.4z"/><circle cx="12" cy="13" r="1"/></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z"/></symbol><symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></symbol><symbol id="i-drag" viewBox="0 0 24 24"><path d="M2 12h20M6 8l-4 4 4 4M18 8l4 4-4 4"/></symbol><symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 016 0V8"/></symbol><symbol id="i-apple" viewBox="0 0 24 24"><path d="M16.4 12.6c0-2.4 2-3.5 2-3.6-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.8-3.5.8-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2-1.1 2.8-2.3.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.5-.9-2.5-3.6zM14.2 5.6c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.7-1.3z" fill="currentColor" stroke="none"/></symbol><symbol id="i-slab" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="4" rx=".8" fill="currentColor" stroke="none"/><rect x="7.5" y="10.5" width="9" height="8.5" rx=".8"/></symbol><symbol id="i-loupe" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="11.2" cy="13.2" r="2.6"/><path d="M13.1 15.1l2.4 2.4"/></symbol><symbol id="i-ruler" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="12.8" width="8" height="3.2" rx=".5"/><path d="M10 12.8v1.3M12 12.8v2M14 12.8v1.3"/></symbol><symbol id="i-corner" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.5 18.2v-4.2a3 3 0 013-3h4"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 10l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z"/></symbol></svg>
+<a class="sr" href="#main">Skip to content</a>
+<div class="abar" data-cd>
+  <div class="wrap">
+    <i class="dot" aria-hidden="true"></i>
+    <b class="live" data-ps-label>Pre sale is live</b>
+    <span class="hide-s">Poly $29 &middot; Glass $200 a card</span>
+    <span>Offer ends in <b data-cd-text>113d 00h 00m</b></span>
+    <a href="shop.html#hero">Claim Your Slot</a>
+  </div>
+</div>
+<header class="hdr">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="HGA, Hybrid Grading Approach, home">
+      <img src="./assets/hybrid_grading/hga-2700a46b.svg" alt="HGA" width="91" height="22">
+      <span class="co">Hybrid Grading<br>Approach</span>
+    </a>
+    <nav class="hnav" id="hnav" aria-label="Site"><a href="shop.html">Presale</a><a href="how-it-works.html">How it works</a><div class="hdd" data-hdd><button type="button" class="hdd-btn" aria-expanded="false" aria-controls="hdd-grading">Grading<svg class="hdd-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="hdd-menu" id="hdd-grading"><a href="grading-standards.html"><b>Grading Standards</b><span>The published standard, in full</span></a><a href="grade-report.html"><b>Grade Report</b><span>Every defect, located and rated</span></a></div></div><a href="legacy.html">Legacy HGA</a><a href="about.html">About</a><a href="faq.html">FAQ</a></nav>
+    <div class="acct">
+      <a class="cart-link" href="cart.html" aria-label="Cart"><svg class="ico"><use href="#i-bag"/></svg><span class="cart-n" data-cart-count hidden>0</span></a>
+      <a class="btn cta" href="shop.html#hero">Claim Your Slot</a>
+      <button class="menu-btn" type="button" data-menu aria-controls="hnav" aria-expanded="false" aria-label="Menu"><svg class="ico"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<!-- Knowledge base article (draft from approved copy). -->
+<article class="sec" aria-labelledby="kb-t" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="kb-art">
+      <nav class="kb-crumbs" aria-label="Breadcrumb"><a href="knowledge-base.html">Knowledge base</a><span aria-hidden="true">/</span><span>Grading</span></nav>
+      <p class="kb-meta"><span class="kb-cat">Grading</span><span>2 min read</span><span>HGA</span></p>
+      <h1 class="h1 kb-title" id="kb-t">How blind grading works</h1>
+      <p class="kb-sub">Graded blind, to a published standard, then audited. What that means for your card.</p>
+    </div>
+    <figure class="kb-cover"><img src="./assets/gen/lab-loupe.webp" alt="A grader inspecting a card under a loupe" width="1200" height="896"></figure>
+    <div class="kb-prose">
+<p>The same card should get the same grade no matter whose it is. That is the whole point of grading blind.</p>
+<h2>Graded blind, then audited</h2>
+<p>Your card is graded by a grader who never knows whose card it is, to a published standard. The grade is then audited for consistency before it is released.</p>
+<h2>Authenticated first</h2>
+<p>Every card is authenticated before it is graded. A card that cannot be authenticated is returned ungraded, fee refunded.</p>
+<h2>Software for centering, people for the rest</h2>
+<p>Software measures centering from high resolution images, so centering is consistent card to card. Human graders judge corners, edges and surface.</p>
+<h2>The standard is public</h2>
+<p>The full grading standard is published, including the scale and how each subgrade is judged.</p>
+<p class="kb-next"><a href="grading-standards.html">Read the grading standards</a></p>
+</div>
+    <div class="kb-art kb-endcta"><div><b>Grade your cards with HGA.</b><span>Presale pricing: Glass $200, Poly $29 a card.</span></div><a class="btn lg" href="shop.html#hero">Claim Your Slot <svg class="ico"><use href="#i-arrow"/></svg></a></div>
+    <div class="kb-rel">
+      <h2 class="h2">Keep <span class="red">reading.</span></h2>
+      <div class="kb-grid"><a class="kb-card" href="kb-grade-report.html" data-cat="Grading" data-text="what&#x27;s on an hga grade report every defect, located and rated. how to read the report that comes with every card we grade.">
+        <div class="kb-img"><img src="./assets/gen/macro-surface.webp" alt="A close look at a card surface under raking light" width="1200" height="896" loading="lazy"></div>
+        <div class="kb-txt"><p class="kb-meta"><span class="kb-cat">Grading</span><span>2 min read</span></p><h3>What&#x27;s on an HGA Grade Report</h3><p>Every defect, located and rated. How to read the report that comes with every card we grade.</p><span class="kb-read">Read article <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+      </a><a class="kb-card" href="kb-glass-or-poly.html" data-cat="Housings" data-text="glass or poly? choosing a housing for each card glass for the cards you show. poly for every card size on the market. you choose per card.">
+        <div class="kb-img"><img src="./assets/gen/display-shelf.webp" alt="HGA slabs displayed on a shelf" width="1200" height="896" loading="lazy"></div>
+        <div class="kb-txt"><p class="kb-meta"><span class="kb-cat">Housings</span><span>2 min read</span></p><h3>Glass or Poly? Choosing a housing for each card</h3><p>Glass for the cards you show. Poly for every card size on the market. You choose per card.</p><span class="kb-read">Read article <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+      </a><a class="kb-card" href="kb-presale-timeline.html" data-cat="Presale" data-text="your presale slot, from claim to grade when you buy, when you book, when you ship, and when your grade comes back.">
+        <div class="kb-img"><img src="./assets/gen/arrival-box.webp" alt="An HGA shipping box on the receiving desk" width="1200" height="896" loading="lazy"></div>
+        <div class="kb-txt"><p class="kb-meta"><span class="kb-cat">Presale</span><span>2 min read</span></p><h3>Your presale slot, from claim to grade</h3><p>When you buy, when you book, when you ship, and when your grade comes back.</p><span class="kb-read">Read article <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+      </a></div>
+    </div>
+  </div>
+</article>
+</main>
+<footer class="foot" data-sbar-stop>
+  <div class="wrap">
+    <div class="top">
+      <div class="lockup">
+        <img src="./assets/hybrid_grading/hga-hybrid-grading-approach-104fc1af.svg" alt="HGA, Hybrid Grading Approach" width="180" height="55">
+        <p>Graded blind to a published standard. Every grade explained. Every card housed. All sports. All TCG.</p>
+        <div class="marks">
+          <img src="./assets/hybrid_grading/hga-poly-69885480.svg" alt="HGA Poly" width="72" height="13">
+          <img src="./assets/hybrid_grading/hga-glass-828ebfd2.svg" alt="HGA Glass" width="80" height="13">
+        </div>
+      </div>
+      <div>
+        <h4>Presale</h4>
+        <ul>
+          <li><a href="shop.html#hero">Claim your slot</a></li>
+          <li><a href="pass.html">Grading slot</a></li>
+          <li><a href="cart.html">Cart</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Grading</h4>
+        <ul>
+          <li><a href="how-it-works.html">How it works</a></li>
+          <li><a href="grading-standards.html">Grading standards</a></li>
+          <li><a href="grade-report.html">The Grade Report</a></li>
+          <li><a href="report.html">Sample Grade Report</a></li>
+          <li><a href="the-reveal.html">The Reveal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About HGA</a></li>
+          <li><a href="legacy.html">Legacy HGA</a></li>
+          <li><a href="legacy.html#lookup">Cert lookup</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="knowledge-base.html">Knowledge base</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>&copy; 2026 HGA &middot; Hybrid Grading Approach &middot; A uCollect company &middot; Chandler, Arizona</span>
+      <span><a href="#">Presale terms</a> &middot; <a href="#">Terms</a> &middot; <a href="#">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

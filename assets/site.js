@@ -22,8 +22,8 @@
   var VARIANTS = {
     promo: {
       eb: "Presale · Nov 23, 2026 to Jan 31, 2027",
-      a: "Our fastest grade", b: "at our lowest price.",
-      lede: "Prepay 15 business day grading now, up to 81% under the launch price. Four subgrades, the Grade Report and the case included. Book your grading day from Feb 1.",
+      a: "Every grade explained.", b: "Every card housed.",
+      lede: "Prepay grading now, up to 80% off launch pricing. Four subgrades, the Grade Report and the case included. Book your grading date from Jan 18; every presale grade is back within 30 days of it.",
       housing: "glass", glass: "ohtani", poly: "judge"
     },
     collector: {
@@ -35,7 +35,7 @@
     dealer: {
       eb: "For dealers and bulk submitters",
       a: "Grade 100 cards", b: "at $29 a card.",
-      lede: "Prepay up to 100 passes per housing per order, with no limit on orders. Passes never expire, stay on your account, and book around your releases and shows.",
+      lede: "Prepay up to 100 slots per housing per order, with no limit on orders. Slots never expire, stay on your account, and book around your releases and shows.",
       housing: "poly", glass: "ohtani", poly: "judge"
     },
     tcg: {
@@ -185,6 +185,16 @@
     });
     $$("a", nav).forEach(function (a) { a.addEventListener("click", function () { nav.classList.remove("open"); mb.setAttribute("aria-expanded", "false"); }); });
   }
+
+  // ---------- header dropdown (Grading) ----------
+  var dds = $$("[data-hdd]");
+  function closeDd(d) { d.classList.remove("open"); d.querySelector(".hdd-btn").setAttribute("aria-expanded", "false"); }
+  dds.forEach(function (d) {
+    var b = d.querySelector(".hdd-btn");
+    b.addEventListener("click", function (e) { e.stopPropagation(); var o = d.classList.toggle("open"); b.setAttribute("aria-expanded", String(o)); });
+    d.addEventListener("keydown", function (e) { if (e.key === "Escape") { closeDd(d); b.focus(); } });
+  });
+  if (dds.length) document.addEventListener("click", function (e) { dds.forEach(function (d) { if (!d.contains(e.target)) closeDd(d); }); });
 
   // ---------- reveal on scroll ----------
   if ("IntersectionObserver" in window && !reduce) {

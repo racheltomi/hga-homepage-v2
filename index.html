@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>HGA Homepage v2</title>
-<meta name="description" content="HGA Glass: the industry's first aerospace glass housing, with RFID. Book your grading date on the HGA calendar. Presale opens Nov 23: Glass $200, Poly $29 a card.">
+<meta name="description" content="HGA Glass: the industry's first aerospace glass housing, with an NFT chip. Book your grading date on the HGA calendar. Presale opens Nov 23: Glass $200, Poly $29 a card.">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#0E0E0E">
 <link rel="preload" href="./assets/fonts/bc-800.woff2" as="font" type="font/woff2" crossorigin>
@@ -178,7 +178,226 @@
 }
 }
 }
+
+/* ---------- HGA Glass chapter ---------- */
+.gx{position:relative;overflow:hidden}
+.gx::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 45% 55% at 72% 30%,rgba(230,36,41,.14),transparent 70%),radial-gradient(ellipse 60% 40% at 50% 100%,rgba(255,255,255,.04),transparent 70%)}
+.gx .wrap{position:relative}
+.gx-intro{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,80px);align-items:center}
+.gx-eb img{height:16px;width:auto;display:block}
+.gx-copy .h2{margin-top:14px}
+.gx-copy .lede{margin-top:16px;max-width:560px}
+.gx-pts{list-style:none;margin:30px 0 0;padding:0;display:grid;max-width:560px}
+.gx-pts li{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 0;border-top:1px solid rgba(255,255,255,.1)}
+.gx-pts li:last-child{border-bottom:1px solid rgba(255,255,255,.1)}
+.gx-n{font-weight:800;font-size:15px;letter-spacing:.06em;color:#ff4a44;padding-top:2px}
+.gx-pts b{display:block;font-size:18px;line-height:1.3;color:#fff}
+.gx-pts p{margin:4px 0 0;font-size:15.5px;line-height:1.5;opacity:.72}
+.gx-hero{position:relative;margin:0;height:clamp(440px,44vw,580px);display:flex;align-items:center;justify-content:center}
+.gx-beam{position:absolute;left:50%;top:-8%;width:78%;height:100%;transform:translateX(-50%);pointer-events:none;filter:blur(18px);opacity:.9;background:linear-gradient(180deg,rgba(235,242,250,.22),rgba(235,242,250,.05) 55%,transparent 85%);clip-path:polygon(42% 0,58% 0,100% 100%,0 100%)}
+.gx-slab{position:relative;z-index:1;width:min(300px,62%);height:auto;filter:drop-shadow(0 40px 50px rgba(0,0,0,.7));animation:gxFloat 7s ease-in-out infinite}
+@keyframes gxFloat{50%{transform:translateY(-10px)}}
+.gx-floor{position:absolute;left:50%;bottom:2%;width:56%;height:34px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.75),transparent 70%);filter:blur(4px)}
+.gx-tag{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;font-size:13px;font-weight:600;white-space:nowrap;background:rgba(20,18,19,.72);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.gx-tag i{width:8px;height:8px;border-radius:50%;background:#ff4a44;box-shadow:0 0 0 4px rgba(230,36,41,.2)}
+.gx-t1{top:14%;right:0}
+.gx-t2{top:50%;left:0}
+.gx-t3{bottom:16%;right:4%}
+.gx-tag{opacity:0;transform:translateY(8px);transition:opacity .6s,transform .6s}
+.gx-hero.in .gx-tag{opacity:1;transform:none}
+.gx-hero.in .gx-t2{transition-delay:.15s}.gx-hero.in .gx-t3{transition-delay:.3s}
+.no-js .gx-tag{opacity:1;transform:none}
+.gx-show{text-align:center}
+.gx-cta{margin-top:clamp(36px,4vw,52px)}
+.gx-sub{font-size:clamp(28px,3vw,42px);max-width:none;margin-left:auto;margin-right:auto;text-align:center}
+.gx-show-lede{margin:10px 0 0;opacity:.7}
+.gx-shelf{list-style:none;margin:40px auto 0;padding:0 0 30px;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,3vw,44px);max-width:1080px;position:relative;align-items:end}
+.gx-shelf::before{content:"";position:absolute;left:2%;right:2%;bottom:66px;height:46px;border-radius:50%;background:radial-gradient(ellipse,rgba(230,36,41,.18),transparent 70%);filter:blur(8px)}
+.gx-shelf::after{content:"";position:absolute;left:0;right:0;bottom:80px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent)}
+.gx-shelf li{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px}
+.gx-shelf img{width:100%;max-width:230px;height:auto;filter:drop-shadow(0 26px 26px rgba(0,0,0,.6));transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.gx-shelf li:hover img{transform:translateY(-10px)}
+.gx-shelf span{font-size:13.5px;line-height:1.35;opacity:.7}
+.gx-shelf span b{display:block;font-size:15px;opacity:1;color:#fff;font-weight:700}
+@media (max-width:900px){
+  .gx-intro{grid-template-columns:1fr}
+  .gx-hero{order:-1;height:clamp(360px,95vw,480px)}
+  .gx-slab{width:min(250px,58%)}
+  .gx-shelf{align-items:flex-start;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:18px;max-width:none;margin-left:calc(-1*clamp(16px,4.5vw,48px));margin-right:calc(-1*clamp(16px,4.5vw,48px));padding:20px clamp(16px,4.5vw,48px) 10px;scrollbar-width:none}
+  .gx-shelf::-webkit-scrollbar{display:none}
+  .gx-shelf::before,.gx-shelf::after{display:none}
+  .gx-shelf li{flex:0 0 44%;scroll-snap-align:center;transform:none!important}
+}
+@media (max-width:480px){
+  .gx-tag{font-size:12px;padding:7px 11px}
+  .gx-t1{right:-4px}.gx-t2{left:-4px}
+}
+@media (prefers-reduced-motion:reduce){.gx-slab{animation:none}.gx-tag{transition:none;opacity:1;transform:none}}
+
+/* ---------- Housings: Glass or Poly ---------- */
+.hz-head{text-align:center;max-width:680px;margin:0 auto}
+.hz-head .eb{display:flex;justify-content:center}
+.hz-head .lede{margin:14px auto 0}
+.hz-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:stretch;max-width:1000px;margin:44px auto 0}
+.hz-card{border-radius:20px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);padding:26px 26px 10px}
+.hz-glass{border-color:rgba(230,36,41,.45);background:linear-gradient(180deg,rgba(230,36,41,.10),rgba(230,36,41,.02));box-shadow:0 30px 60px -30px rgba(230,36,41,.45)}
+.hz-card header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.1)}
+.hz-card header img{height:18px;width:auto}
+.hz-card header span{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.6}
+.hz-glass header span{color:#ff6b6e;opacity:1}
+.hz-card dl{margin:0}
+.hz-card dl div{padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.hz-card dl div:last-child{border-bottom:0}
+.hz-card dt{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.55}
+.hz-card dd{margin:5px 0 0;font-size:16px;line-height:1.45;color:#fff}
+.hz-or{align-self:center;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(255,255,255,.16);background:var(--paper);color:var(--text-2)}
+.hz-same{display:flex;justify-content:center;align-items:center;gap:10px;margin:26px auto 0;text-align:center;opacity:.8}
+.hz-same .ico{width:18px;height:18px;color:#ff4a44;flex:none}
+@media (max-width:760px){
+  .hz-grid{grid-template-columns:1fr;gap:12px}
+  .hz-or{justify-self:center}
+  .hz-card{padding:22px 20px 6px}
+  .hz-same{align-items:flex-start;text-align:left;max-width:420px}
+}
+
+/* ===== Round 2: hero highlight, premium three cards, pinned process, Glass-first pricing, type scale ===== */
+.hc2-lede .hc2-hl{color:#fff;font-weight:700}
+
+/* How HGA works: pinned, scroll-driven */
+.hm-proc.proc-pin{padding-bottom:0}
+.pin-head{text-align:center}
+.pin-head .eb{display:flex;justify-content:center}
+.pin-head .h2{margin-left:auto;margin-right:auto}
+.pin-track{position:relative;height:calc(100vh + 5 * 52vh)}
+.pin-stick{position:sticky;top:var(--hdr,64px);height:calc(100vh - var(--hdr,64px));display:flex;align-items:center}
+.pin-stick .hm-proc-grid{width:100%}
+.proc-pin .pr-step.on .pr-bar::after{animation:none!important;transform:scaleX(var(--sp,0));transition:transform .15s linear}
+.proc-pin .pr-step.done .pr-n{color:rgba(255,74,68,.6)}
+.pin-dots{display:none;gap:6px;justify-content:center;margin-top:14px}
+.pin-dots i{width:6px;height:6px;border-radius:6px;background:rgba(255,255,255,.25);transition:width .3s,background .3s}
+.pin-dots i.on{width:22px;background:#ff4a44}
+@media (max-width:900px){
+  .pin-track{height:calc(100vh + 5 * 60vh)}
+  .pin-stick{align-items:flex-start;padding-top:12px}
+  .proc-pin .hm-proc-grid{gap:14px}
+  .proc-pin .pr-vis{aspect-ratio:4/3.1!important;max-height:42vh}
+  .proc-pin .pr-list li{display:none}
+  .proc-pin .pr-list li:has(.pr-step.on){display:block}
+  .proc-pin .pr-step{padding:12px 14px}
+  .pin-dots{display:flex}
+}
+
+/* Presale pricing: Glass first, Poly as a link */
+.px-glass{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,4vw,56px);align-items:center;max-width:980px;margin:clamp(28px,3.4vw,44px) auto 0;padding:clamp(24px,3.4vw,44px);border-radius:28px;border:1px solid rgba(230,36,41,.45);background:radial-gradient(ellipse 70% 90% at 15% 50%,rgba(230,36,41,.18),transparent 70%),#141212;box-shadow:0 50px 100px -50px rgba(230,36,41,.55)}
+.px-media{position:relative;display:grid;place-items:center}
+.px-glow{position:absolute;width:70%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(230,36,41,.35),transparent 70%);filter:blur(10px)}
+.px-media img{position:relative;width:min(240px,80%);height:auto;filter:drop-shadow(0 30px 40px rgba(0,0,0,.7));transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.px-glass:hover .px-media img{transform:translateY(-6px) rotate(-1.5deg)}
+.px-body{display:grid;justify-items:start;gap:14px}
+.px-wm{height:22px;width:auto}
+.px-t{margin:0;font-size:clamp(18px,1.4vw,21px);font-weight:600;color:#fff}
+.px-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 12px;margin:0}
+.px-price b{font-family:var(--disp);font-weight:800;font-size:clamp(48px,5vw,64px);line-height:1;color:#fff}
+.px-price s{font-size:22px;color:rgba(255,255,255,.5)}
+.px-price span{font-size:15px;color:rgba(255,255,255,.65)}
+.px-price em{font-style:normal;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6FD39A}
+.px-inc{list-style:none;margin:4px 0 6px;padding:0;display:grid;gap:9px}
+.px-inc li{display:flex;align-items:center;gap:10px;font-size:16px;color:rgba(255,255,255,.85)}
+.px-inc .ico{width:18px;height:18px;color:#ff4a44;flex:none}
+.px-poly{margin:22px auto 0;text-align:center;font-size:16px;color:rgba(255,255,255,.72)}
+.px-poly b{color:#fff}
+.px-poly s{color:rgba(255,255,255,.45);margin-right:4px}
+.px-poly a{display:inline-flex;align-items:center;gap:6px;color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:5px;text-decoration-color:rgba(255,255,255,.35);transition:text-decoration-color .3s}
+.px-poly a:hover{text-decoration-color:#ff4a44}
+.px-poly a .ico{width:16px;height:16px;transition:transform .3s}
+.px-poly a:hover .ico{transform:translateX(3px)}
+@media (max-width:760px){.px-glass{grid-template-columns:1fr}.px-media img{width:min(190px,60%)}}
+
+/* Type scale (matches the rest of the site): H1 64→38, section H2 46→30, sub-heads 34→26 */
+
+#main .h2{font-size:clamp(30px,calc(1.6vw + 23.8px),46px)}
+#main .v2-built,#main .gx-sub{font-size:clamp(26px,calc(.76vw + 23px),34px)}
+#main .lede{font-size:clamp(17px,calc(.29vw + 15.9px),20px)}
+#main .gx-pts p,#main .hz-card dd,#main .v2-steps p,#main .pr-t>span{font-size:clamp(15px,calc(.1vw + 14.6px),16px)}
+#main .gx-pts b,#main .v2-steps b,#main .pr-t b{font-size:clamp(18px,calc(.19vw + 17.3px),20px)}
+
+/* ===== Round 3 ===== */
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+
+/* So we built what grading was missing: tilt, glare, travelling edge light, one live effect per card */
+.pcx{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,28px);max-width:1180px;margin:clamp(28px,3.4vw,44px) auto 0;perspective:1400px}
+.pc{--rx:0deg;--ry:0deg;--mx:50%;--my:30%;display:block;color:inherit;text-decoration:none;border-radius:26px;outline:none}
+.pc-in{position:relative;aspect-ratio:3/4;border-radius:26px;overflow:hidden;isolation:isolate;background:#0d0b0b;transform:rotateX(var(--rx)) rotateY(var(--ry));transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.7,.2,1),box-shadow .5s;box-shadow:0 40px 80px -40px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.08)}
+.pc.tilting .pc-in{transition:transform .12s linear,box-shadow .5s}
+.pc-in::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;z-index:5;pointer-events:none;background:conic-gradient(from var(--ang),transparent 0deg,transparent 250deg,rgba(255,74,68,.95) 300deg,#fff 320deg,rgba(255,74,68,.95) 340deg,transparent 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .5s;animation:pcAng 3.2s linear infinite;animation-play-state:paused}
+@keyframes pcAng{to{--ang:360deg}}
+.pc:hover .pc-in::before,.pc:focus-visible .pc-in::before{opacity:1;animation-play-state:running}
+.pc:hover .pc-in,.pc:focus-visible .pc-in{box-shadow:0 50px 90px -40px rgba(230,36,41,.45),0 0 0 1px rgba(255,255,255,.12)}
+.pc-media{position:absolute;inset:0}
+.pc-media img{width:100%;height:100%;object-fit:cover;transform:scale(1.08) translate(calc((50% - var(--mx)) * .04),calc((50% - var(--my)) * .04));transition:transform 1.1s cubic-bezier(.2,.7,.2,1),filter .8s;filter:brightness(.82) saturate(.9) contrast(1.05)}
+.pc:hover .pc-media img{filter:brightness(.9) saturate(1) contrast(1.05)}
+.pc-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,7,7,.15) 0%,transparent 30%,rgba(8,7,7,.55) 58%,rgba(8,7,7,.97) 88%)}
+.pc-glare{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.18),transparent 45%);mix-blend-mode:screen;opacity:0;transition:opacity .4s}
+.pc.tilting .pc-glare{opacity:1}
+.pc-num{position:absolute;top:18px;left:22px;z-index:4;font-family:var(--disp);font-weight:800;font-size:64px;line-height:1;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.35);transform:translateZ(30px)}
+.pc-body{position:absolute;left:14px;right:14px;bottom:14px;z-index:4;display:grid;gap:8px;padding:20px 20px 18px;border-radius:18px;background:rgba(14,12,12,.55);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);transform:translateZ(40px)}
+.pc-t{font-size:clamp(20px,1.6vw,24px);font-weight:800;letter-spacing:-.01em;line-height:1.15;color:#fff}
+.pc-body p{margin:0;font-size:15.5px;line-height:1.5;color:rgba(255,255,255,.72)}
+.pc-more{display:inline-flex;align-items:center;gap:8px;margin-top:4px;font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#ff6b6e}
+.pc-more .ico{width:15px;height:15px;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.pc:hover .pc-more .ico{transform:translateX(5px)}
+.pc:focus-visible .pc-in{outline:2px solid #ff4a44;outline-offset:4px}
+/* live effects (run only while the cards are on screen) */
+.pc-fx{position:absolute;inset:0;z-index:2;pointer-events:none}
+.pc-fx i{position:absolute;display:block}
+.pc[data-fx="sheen"] .pc-media img{object-position:50% 78%}
+.pc[data-fx="sheen"] .pc-fx i:first-child{inset:-20% -60%;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.22) 50%,transparent 58%);transform:translateX(-60%)}
+.pcx.live .pc[data-fx="sheen"] .pc-fx i:first-child{animation:pcSheen 4.8s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes pcSheen{0%,55%{transform:translateX(-60%)}100%{transform:translateX(60%)}}
+.pc[data-fx="rings"] .pc-fx i{left:38%;top:44%;width:90px;height:90px;margin:-45px 0 0 -45px;border-radius:50%;border:1.5px solid rgba(255,74,68,.8);opacity:0}
+.pcx.live .pc[data-fx="rings"] .pc-fx i{animation:pcRing 2.8s cubic-bezier(.2,.7,.2,1) infinite}
+.pcx.live .pc[data-fx="rings"] .pc-fx i:nth-child(2){animation-delay:.9s}.pcx.live .pc[data-fx="rings"] .pc-fx i:nth-child(3){animation-delay:1.8s}
+@keyframes pcRing{0%{transform:scale(.3);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+.pc[data-fx="scan"] .pc-fx i:first-child{left:6%;right:6%;top:8%;height:2px;background:linear-gradient(90deg,transparent,#ff4a44,transparent);box-shadow:0 0 18px 3px rgba(230,36,41,.55);opacity:0}
+.pcx.live .pc[data-fx="scan"] .pc-fx i:first-child{animation:pcScan 3.6s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes pcScan{0%{top:8%;opacity:0}12%{opacity:1}50%{top:52%;opacity:1}62%,100%{top:56%;opacity:0}}
+@media (max-width:900px){.pcx{grid-template-columns:1fr;max-width:480px}.pc-in{aspect-ratio:4/4.4}}
+@media (prefers-reduced-motion:reduce){.pc-in,.pc-media img{transition:none;transform:none}.pc-in::before{animation:none}.pcx.live .pc-fx i{animation:none!important}}
+
+/* Metal and glass: the real 3D slab, no white cast */
+.gx-beam,.gx-slab{display:none!important}
+.gx-hero{overflow:visible}
+.gx-halo{position:absolute;left:50%;top:50%;width:min(520px,92%);aspect-ratio:1;transform:translate(-50%,-52%);border-radius:50%;background:radial-gradient(circle,rgba(230,36,41,.26) 0%,rgba(230,36,41,.08) 40%,transparent 68%);filter:blur(6px);pointer-events:none}
+.gx-3d{position:relative;z-index:1;width:min(320px,62%)}
+.gx-3d .spin-slab img{filter:drop-shadow(0 40px 46px rgba(0,0,0,.75))}
+.gx-3d .spin-slab{cursor:grab}
+.gx-3d .spin-slab:active{cursor:grabbing}
+.gx-3d .hint{white-space:nowrap}
+@media (max-width:900px){.gx-3d{width:min(250px,58%)}}
+
+/* Headline sizes: these two read as section headlines */
+#main .v2-built,#main .gx-sub{font-size:clamp(30px,calc(1.6vw + 23.8px),46px)!important}
+
+/* How HGA works: smoother pinned scroll */
+.pin-track{height:calc(100vh + 5 * 42vh)!important}
+.proc-pin .pr-t>span{display:block!important;animation:none!important;max-height:0;opacity:0;overflow:hidden;transition:max-height .55s cubic-bezier(.2,.7,.2,1),opacity .45s ease,margin .45s}
+.proc-pin .pr-step.on .pr-t>span{max-height:120px;opacity:.78;margin-top:6px}
+.proc-pin .pr-step{transition:background .45s,border-color .45s,box-shadow .45s}
+.proc-pin .pr-fig{transition:opacity .7s cubic-bezier(.2,.7,.2,1);will-change:opacity}
+.proc-pin .pr-fig>img{transition:transform 1.4s cubic-bezier(.2,.7,.2,1);transform:scale(1.08)}
+.proc-pin .pr-fig.on>img{transform:scale(1)}
+.proc-pin .pk{transition:opacity .6s .15s,transform .6s .15s cubic-bezier(.2,.7,.2,1)}
+@media (max-width:900px){.pin-track{height:calc(100vh + 5 * 48vh)!important}}
+
+/* Pricing: calmer glow, Poly as its own quiet row */
+.px-glass{box-shadow:0 40px 80px -60px rgba(230,36,41,.4)!important}
+.px-poly{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 18px;width:fit-content;max-width:100%;margin:clamp(36px,4vw,52px) auto 0!important;padding:14px 22px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:#121010;font-size:15.5px!important;color:rgba(255,255,255,.75)!important;position:relative;z-index:1}
+.px-poly img{height:15px;width:auto;opacity:.9}
+.px-poly .px-sep{width:1px;height:18px;background:rgba(255,255,255,.15)}
+@media (max-width:640px){.px-poly{border-radius:18px;flex-direction:column;text-align:center;padding:16px 18px}.px-poly .px-sep{display:none}}
 </style>
+<link rel="stylesheet" href="./assets/motion.css">
+<script defer src="./assets/motion.js"></script>
 </head>
 <body class="hm-page">
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="12" cy="14.2" r="3.4"/><path d="M12 12.3v2l1.4 1"/></symbol><symbol id="i-layers" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8.2" y="10.2" width="3.3" height="3.3" rx=".6"/><rect x="12.5" y="10.2" width="3.3" height="3.3" rx=".6"/><rect x="8.2" y="14.5" width="3.3" height="3.3" rx=".6"/><rect x="12.5" y="14.5" width="3.3" height="3.3" rx=".6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.5 11h7M8.5 14h7M8.5 17h4"/></symbol><symbol id="i-camera" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="12.2" width="8" height="5.6" rx="1"/><circle cx="12" cy="15" r="1.5"/><path d="M10.3 12.2l.8-1.4h1.8l.8 1.4"/></symbol><symbol id="i-video" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="7.8" y="11.6" width="6.2" height="5" rx="1"/><path d="M14 13.2l3-1.4v4.6l-3-1.4"/></symbol><symbol id="i-eyeoff" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.3 14.2s1.5-2.6 3.7-2.6 3.7 2.6 3.7 2.6-1.5 2.6-3.7 2.6-3.7-2.6-3.7-2.6z"/><path d="M8.5 18l7-7.6"/></symbol><symbol id="i-chip" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="9.4" y="11.6" width="5.2" height="5.2" rx="1"/><path d="M9.4 13.2H8M9.4 15.2H8M14.6 13.2H16M14.6 15.2H16M11 11.6v-1.4M13 11.6v-1.4M11 16.8v1.4M13 16.8v1.4"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 10l3.4 1.4v2.6c0 2-1.4 3.5-3.4 4.4-2-.9-3.4-2.4-3.4-4.4v-2.6L12 10z"/><path d="M10.5 14.2l1 1 2.1-2.1"/></symbol><symbol id="i-box" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8.3" y="10.4" width="7.4" height="8.2" rx="1"/><rect x="10" y="12.2" width="4" height="4.6" rx=".6"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="11.2" width="8" height="7" rx="1"/><path d="M8 13.7h8M10.2 9.8v2.4M13.8 9.8v2.4"/></symbol><symbol id="i-truck" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M7.8 12h5.4v4.4H7.8zM13.2 13.6h2l1.4 1.5v1.3h-3.4z"/><circle cx="9.7" cy="17.6" r=".9"/><circle cx="14.6" cy="17.6" r=".9"/></symbol><symbol id="i-gift" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="12.4" width="8" height="2.2"/><path d="M9 14.6v3.8h6v-3.8M12 12.4v6M12 12.4c-.8-.6-2.6-.7-2.6-1.8S11.2 9.9 12 12.4zM12 12.4c.8-.6 2.6-.7 2.6-1.8S12.8 9.9 12 12.4z"/></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.5 12.2h5.5l-1.6-1.6M15.5 16h-5.5l1.6 1.6"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol><symbol id="i-award" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 10.3l1.15 2.25 2.5.35-1.8 1.75.45 2.5L12 15.95l-2.3 1.2.45-2.5-1.8-1.75 2.5-.35z"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.3 16.2c.9-3 1.9-3 2.4 0s1.5 0 2-3 1.6-1.6 2.6 1.2M8.3 18.3h7.4"/></symbol><symbol id="i-size" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8 11.3V9.8h1.5M16 11.3V9.8h-1.5M8 16.9v1.5h1.5M16 16.9v1.5h-1.5"/><rect x="10.4" y="12" width="3.2" height="4.2" rx=".6"/></symbol><symbol id="i-target" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="12" cy="14.2" r="3.2"/><circle cx="12" cy="14.2" r=".9" fill="currentColor" stroke="none"/><path d="M12 9.8v1.6M12 17v1.6M7.6 14.2h1.6M14.8 14.2h1.6"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/><circle cx="12" cy="15.5" r="1.2"/></symbol><symbol id="i-card" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8.4" y="10.6" width="7.2" height="3" rx=".5" fill="currentColor" stroke="none"/><path d="M8.4 16h7.2M8.4 18.2h4"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="11.4" width="8" height="6" rx="1"/><path d="M8.3 12.2l3.7 2.6 3.7-2.6"/></symbol><symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="9" y="10" width="6" height="8.6" rx="1.2"/><path d="M11 17h2"/></symbol><symbol id="i-image" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="10.8" width="8" height="7.4" rx="1"/><circle cx="10.3" cy="13" r=".9"/><path d="M16 16.2l-2.4-2.4-4 4"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5z"/></symbol><symbol id="i-pause" viewBox="0 0 24 24"><path d="M8.5 5.5v13M15.5 5.5v13"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8 14.2s1.6-2.6 4-2.6 4 2.6 4 2.6-1.6 2.6-4 2.6-4-2.6-4-2.6z"/><circle cx="12" cy="14.2" r="1.3" fill="currentColor" stroke="none"/></symbol><symbol id="i-database" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><ellipse cx="12" cy="11.6" rx="3.5" ry="1.3"/><path d="M8.5 11.6v5c0 .7 1.6 1.3 3.5 1.3s3.5-.6 3.5-1.3v-5"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="10.2" cy="12.4" r="1.5"/><circle cx="14.4" cy="12.8" r="1.1"/><path d="M7.6 18.2a2.6 2.6 0 015.2 0M13 18.2a1.9 1.9 0 013.4 0"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M15.5 14.2a3.5 3.5 0 01-6.2 2.2M8.5 14.2a3.5 3.5 0 016.2-2.2M8.5 11.2v2.4h2.4M15.5 17.2v-2.4h-2.4"/></symbol><symbol id="i-dollar" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 9.8v8.6M14 12.3c0-.8-.9-1.4-2-1.4s-2 .6-2 1.4c0 1.9 4 .9 4 2.8 0 .9-.9 1.5-2 1.5s-2-.6-2-1.4"/></symbol><symbol id="i-map" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 18.4s3-2.8 3-5.4a3 3 0 10-6 0c0 2.6 3 5.4 3 5.4z"/><circle cx="12" cy="13" r="1"/></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z"/></symbol><symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></symbol><symbol id="i-drag" viewBox="0 0 24 24"><path d="M2 12h20M6 8l-4 4 4 4M18 8l4 4-4 4"/></symbol><symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 016 0V8"/></symbol><symbol id="i-apple" viewBox="0 0 24 24"><path d="M16.4 12.6c0-2.4 2-3.5 2-3.6-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.8-3.5.8-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2-1.1 2.8-2.3.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.5-.9-2.5-3.6zM14.2 5.6c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.7-1.3z" fill="currentColor" stroke="none"/></symbol><symbol id="i-slab" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="4" rx=".8" fill="currentColor" stroke="none"/><rect x="7.5" y="10.5" width="9" height="8.5" rx=".8"/></symbol><symbol id="i-loupe" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="11.2" cy="13.2" r="2.6"/><path d="M13.1 15.1l2.4 2.4"/></symbol><symbol id="i-ruler" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="12.8" width="8" height="3.2" rx=".5"/><path d="M10 12.8v1.3M12 12.8v2M14 12.8v1.3"/></symbol><symbol id="i-corner" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.5 18.2v-4.2a3 3 0 013-3h4"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 10l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z"/></symbol></svg>
@@ -198,7 +417,7 @@
       <img src="./assets/hybrid_grading/hga-2700a46b.svg" alt="HGA" width="91" height="22">
       <span class="co">Hybrid Grading<br>Approach</span>
     </a>
-    <nav class="hnav" id="hnav" aria-label="Site"><a href="shop.html">Presale</a><a href="grading-standards.html">Grading Standards</a><a href="legacy.html">Legacy HGA</a><a href="about.html">About</a><a href="faq.html">FAQ</a></nav>
+    <nav class="hnav" id="hnav" aria-label="Site"><a href="shop.html">Presale</a><a href="how-it-works.html">How it works</a><div class="hdd" data-hdd><button type="button" class="hdd-btn" aria-expanded="false" aria-controls="hdd-grading">Grading<svg class="hdd-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="hdd-menu" id="hdd-grading"><a href="grading-standards.html"><b>Grading Standards</b><span>The published standard, in full</span></a><a href="grade-report.html"><b>Grade Report</b><span>Every defect, located and rated</span></a></div></div><a href="legacy.html">Legacy HGA</a><a href="about.html">About</a><a href="faq.html">FAQ</a></nav>
     <div class="acct">
       <a class="cart-link" href="cart.html" aria-label="Cart"><svg class="ico"><use href="#i-bag"/></svg><span class="cart-n" data-cart-count hidden>0</span></a>
       <a class="btn cta" href="shop.html#hero">Claim Your Slot</a>
@@ -207,6 +426,7 @@
   </div>
 </header>
 <main id="main">
+
 <!-- HOMEPAGE VERSION C: morphing housing hero. Same brief as version A (Trevor call 2026-10-14). Text on the left; on the right one
      glass housing resizes through every size, single to deck (after Rachel Tomi's hga-homepage hero). A collector quote rotates under the claim button.
      Then other graders vs HGA in one table, the calendar, the offer. Collector quotes are DRAFTS until real collectors own them. -->
@@ -215,13 +435,13 @@
     <div class="hc2-text">
       <p class="eb"><span><span data-ps-label>Presale is live</span> &middot; up to 80% off launch pricing</span></p>
       <h1 class="h1" id="hc-title"><span>We know grading sucks.</span> <span class="red">But not anymore.</span></h1>
-      <p class="hc2-lede">Introducing the world’s first aerospace engineered glass card housing with RFID tracking and end to end grading transparency. Built to change how your cards are protected, graded, and tracked.</p>
+      <p class="hc2-lede">Introducing the world’s first aerospace engineered <b class="hc2-hl">glass card</b> housing with an NFT chip and end to end grading transparency. Built to change how your cards are protected, graded, and tracked.</p>
       <div class="hc2-buy">
         <a class="btn lg hm-cta" href="shop.html?h=glass#hero">Claim Your Slot <svg class="ico"><use href="#i-arrow"/></svg></a>
       </div>
       <ul class="hc2-pts v2-pts-col">
         <li><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg>Book the exact date for grading</li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-chip"/></svg>RFID tracking in every slab</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-chip"/></svg>NFT chip in every slab</li>
         <li><svg class="ico" aria-hidden="true"><use href="#i-file"/></svg>Four free subgrades</li>
         <li><svg class="ico" aria-hidden="true"><use href="#i-eye"/></svg>End to end card grading transparency</li>
       </ul>
@@ -248,7 +468,7 @@
             <span class="hc2-sheen" aria-hidden="true"></span>
             <span class="hc2-scan" aria-hidden="true"></span>
           </div>
-          <div class="hc2-face hc2-back"><img src="./assets/hybrid_grading/hga-2700a46b.svg" alt="" width="91" height="22"><span>RFID</span></div>
+          <div class="hc2-face hc2-back"><img src="./assets/hybrid_grading/hga-2700a46b.svg" alt="" width="91" height="22"><span>NFT chip</span></div>
           <div class="hc2-face hc2-side l"></div><div class="hc2-face hc2-side r"></div>
           <div class="hc2-face hc2-side t"></div><div class="hc2-face hc2-side b"></div>
         </div>
@@ -259,16 +479,64 @@
     </div>
   <ul class="hc2-pts v2-pts-wide">
         <li><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg>Book the exact date for grading</li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-chip"/></svg>RFID tracking in every slab</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-chip"/></svg>NFT chip in every slab</li>
         <li><svg class="ico" aria-hidden="true"><use href="#i-file"/></svg>Four free subgrades</li>
         <li><svg class="ico" aria-hidden="true"><use href="#i-eye"/></svg>End to end card grading transparency</li>
       </ul>
   </div>
 </section>
 
-
 <section class="rv-strip" id="reviews-strip" aria-label="Collector reviews">
-  <div class="rvs-win" tabindex="0" aria-label="Collector reviews, scrolling. Hover or focus to pause."><div class="rvs-track"><ul class="rvs-set"><li><img class="rvs-av" src="./assets/people/men-32.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Finally something better than plastic."</blockquote><cite>Ryan G.</cite></span></li><li><img class="rvs-av" src="./assets/people/men-41.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"My best cards finally look like they belong on a shelf."</blockquote><cite>Chris M.</cite></span></li><li><img class="rvs-av" src="./assets/people/women-12.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Four subgrades on the label, so I can see exactly why it got the grade it did."</blockquote><cite>Danielle R.</cite></span></li><li><img class="rvs-av" src="./assets/people/men-75.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"An RFID chip tied to the certificate is a big deal when I go to sell."</blockquote><cite>Marcus T.</cite></span></li><li><img class="rvs-av" src="./assets/people/women-68.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Thirty days from a date I pick. That alone gets me in."</blockquote><cite>Sam L.</cite></span></li><li><img class="rvs-av" src="./assets/people/women-44.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Finally somewhere that grades my booklets the right way."</blockquote><cite>Taylor B.</cite></span></li></ul><ul class="rvs-set" aria-hidden="true"><li><img class="rvs-av" src="./assets/people/men-32.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Finally something better than plastic."</blockquote><cite>Ryan G.</cite></span></li><li><img class="rvs-av" src="./assets/people/men-41.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"My best cards finally look like they belong on a shelf."</blockquote><cite>Chris M.</cite></span></li><li><img class="rvs-av" src="./assets/people/women-12.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Four subgrades on the label, so I can see exactly why it got the grade it did."</blockquote><cite>Danielle R.</cite></span></li><li><img class="rvs-av" src="./assets/people/men-75.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"An RFID chip tied to the certificate is a big deal when I go to sell."</blockquote><cite>Marcus T.</cite></span></li><li><img class="rvs-av" src="./assets/people/women-68.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Thirty days from a date I pick. That alone gets me in."</blockquote><cite>Sam L.</cite></span></li><li><img class="rvs-av" src="./assets/people/women-44.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Finally somewhere that grades my booklets the right way."</blockquote><cite>Taylor B.</cite></span></li></ul></div></div>
+  <div class="rvs-win" tabindex="0" aria-label="Collector reviews, scrolling. Hover or focus to pause."><div class="rvs-track"><ul class="rvs-set"><li><img class="rvs-av" src="./assets/people/men-32.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Finally something better than plastic."</blockquote><cite>Ryan G.</cite></span></li><li><img class="rvs-av" src="./assets/people/men-41.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"My best cards finally look like they belong on a shelf."</blockquote><cite>Chris M.</cite></span></li><li><img class="rvs-av" src="./assets/people/women-12.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Four subgrades on the label, so I can see exactly why it got the grade it did."</blockquote><cite>Danielle R.</cite></span></li><li><img class="rvs-av" src="./assets/people/men-75.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"An NFT chip tied to the certificate is a big deal when I go to sell."</blockquote><cite>Marcus T.</cite></span></li><li><img class="rvs-av" src="./assets/people/women-68.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Thirty days from a date I pick. That alone gets me in."</blockquote><cite>Sam L.</cite></span></li><li><img class="rvs-av" src="./assets/people/women-44.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Finally somewhere that grades my booklets the right way."</blockquote><cite>Taylor B.</cite></span></li></ul><ul class="rvs-set" aria-hidden="true"><li><img class="rvs-av" src="./assets/people/men-32.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Finally something better than plastic."</blockquote><cite>Ryan G.</cite></span></li><li><img class="rvs-av" src="./assets/people/men-41.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"My best cards finally look like they belong on a shelf."</blockquote><cite>Chris M.</cite></span></li><li><img class="rvs-av" src="./assets/people/women-12.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Four subgrades on the label, so I can see exactly why it got the grade it did."</blockquote><cite>Danielle R.</cite></span></li><li><img class="rvs-av" src="./assets/people/men-75.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"An NFT chip tied to the certificate is a big deal when I go to sell."</blockquote><cite>Marcus T.</cite></span></li><li><img class="rvs-av" src="./assets/people/women-68.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Thirty days from a date I pick. That alone gets me in."</blockquote><cite>Sam L.</cite></span></li><li><img class="rvs-av" src="./assets/people/women-44.jpg" alt="" width="128" height="128" loading="lazy"><span class="rvs-body"><blockquote>"Finally somewhere that grades my booklets the right way."</blockquote><cite>Taylor B.</cite></span></li></ul></div></div>
+</section>
+
+<!-- HGA Glass chapter: follows "So we built what grading was missing" and goes deeper on the first of those three cards.
+     Copy is approved content-pack copy (hga-glass.html). Slab images: content pack renders. -->
+<section class="sec gx" id="glass" aria-labelledby="gx-title">
+  <div class="wrap">
+    <div class="gx-intro">
+      <div class="gx-copy">
+        <p class="eb gx-eb"><img src="./assets/hybrid_grading/hga-glass-828ebfd2.svg" alt="HGA Glass" width="96" height="16"></p>
+        <h2 class="h2" id="gx-title">Metal and glass. <span class="red">Nothing else like it.</span></h2>
+        <p class="lede">The only metal and glass housing in the hobby. Built for the cards you want to look at every day, with the same label, chip and Grade Report as every card we grade.</p>
+        <ol class="gx-pts">
+          <li class="rv"><span class="gx-n" aria-hidden="true">01</span><div><b>A display piece, not a plastic slab</b><p>Every finished slab is imaged before it leaves.</p></div></li>
+          <li class="rv"><span class="gx-n" aria-hidden="true">02</span><div><b>Tooled to the card</b><p>Every card size, single to deck. If no exact Glass size fits, the nearest is selected and you are told.</p></div></li>
+          <li class="rv"><span class="gx-n" aria-hidden="true">03</span><div><b>Glass at no charge</b><p>A perfect 10 on every subgrade earns HGA Flawless and Glass at no charge.</p></div></li>
+        </ol>
+      </div>
+      <figure class="gx-hero rv" aria-label="An HGA Glass slab you can turn over: Shohei Ohtani, graded 10">
+        <span class="gx-halo" aria-hidden="true"></span>
+        <div class="stage-in gx-3d">
+          <div class="spin-slab" role="img" aria-label="HGA Glass slab: Shohei Ohtani, graded 10. Drag to turn it over."
+            data-controller="hybrid-grading--slab"
+            data-action="pointerdown->hybrid-grading--slab#grab pointermove->hybrid-grading--slab#drag pointerup->hybrid-grading--slab#drop pointercancel->hybrid-grading--slab#drop keydown->hybrid-grading--slab#nudge"
+            data-hybrid-grading--slab-model-value="./assets/hga/glass-c2f02c4d.glb"
+            data-hybrid-grading--slab-case-front-value="./assets/hga/glass_front-f7fd82f9.webp"
+            data-hybrid-grading--slab-case-back-value="./assets/hga/glass_back-d8c9ac8c.webp"
+            data-hybrid-grading--slab-card-front-value="./slabs/ohtani/card/front.webp"
+            data-hybrid-grading--slab-card-back-value="./slabs/ohtani/card/back.webp"
+            data-hybrid-grading--slab-label-front-value="./slabs/ohtani/label/front.webp"
+            data-hybrid-grading--slab-label-back-value="./slabs/ohtani/label/back.webp"
+            data-hybrid-grading--slab-card-corner-radius-value="0.0"
+            data-hybrid-grading--slab-direction-value="left"
+            data-hybrid-grading--slab-spin-value="true"
+            data-hybrid-grading--slab-sway-value="true" tabindex="0">
+            <img src="./slabs/ohtani/720.webp" alt="HGA Glass slab: Shohei Ohtani, graded 10" width="720" height="1207">
+            <canvas aria-hidden="true" data-hybrid-grading--slab-target="canvas" data-action="webglcontextlost->hybrid-grading--slab#lose webglcontextrestored->hybrid-grading--slab#restore"></canvas>
+            <div class="hint" aria-hidden="true"><svg class="ico" style="width:22px;height:14px"><use href="#i-drag"/></svg>Drag to turn it over</div>
+          </div>
+        </div>
+        <span class="gx-tag gx-t1"><i aria-hidden="true"></i>Card grade on the label</span>
+        <span class="gx-tag gx-t2"><i aria-hidden="true"></i>Subgrades on the back</span>
+        <span class="gx-tag gx-t3"><i aria-hidden="true"></i>Metal and glass</span>
+        <span class="gx-floor" aria-hidden="true"></span>
+      </figure>
+    </div>
+
+    <p class="v2-cta gx-cta"><a class="btn lg hm-cta" href="shop.html?h=glass#hero">Claim Your Glass Slot <svg class="ico"><use href="#i-arrow"/></svg></a></p>
+
+  </div>
 </section>
 
 <section class="sec v2-late" id="presale" aria-labelledby="v2-late-title">
@@ -293,14 +561,35 @@
     <div class="hc-tbl-wrap">
       <table class="hc-tbl"><caption class="sr">Grading today compared with HGA</caption><colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
         <thead><tr><td></td><th scope="col">Grading today</th><th scope="col" class="hga"><img src="./assets/hybrid_grading/hga-2700a46b.svg" alt="HGA" width="70" height="17"></th></tr></thead>
-        <tbody><tr><th scope="row">Why your card got its grade</th><td class="no" data-l="Grading today"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>A number, no reasons</td><td class="yes" data-l="HGA"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Full report and four subgrades, free</td></tr><tr><th scope="row">Who decides</th><td class="no" data-l="Grading today"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Depends on the grader's day</td><td class="yes" data-l="HGA"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>One standard, graded blind</td></tr><tr><th scope="row">When it comes back</th><td class="no" data-l="Grading today"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Estimates that keep moving</td><td class="yes" data-l="HGA"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>A date you book, back within 30 days</td></tr><tr><th scope="row">The housing</th><td class="no" data-l="Grading today"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Plastic</td><td class="yes" data-l="HGA"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Aerospace glass, or Poly</td></tr><tr><th scope="row">Proof it's real</th><td class="no" data-l="Grading today"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>A printed label</td><td class="yes" data-l="HGA"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>RFID chip tied to a blockchain certificate</td></tr><tr><th scope="row">Booklets, trifolds, five folds, decks</th><td class="no" data-l="Grading today"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Hard to find</td><td class="yes" data-l="HGA"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Every size, single to deck</td></tr></tbody>
+        <tbody><tr><th scope="row">Why your card got its grade</th><td class="no" data-l="Grading today"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>A number, no reasons</td><td class="yes" data-l="HGA"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Full report and four subgrades, free</td></tr><tr><th scope="row">Who decides</th><td class="no" data-l="Grading today"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Depends on the grader's day</td><td class="yes" data-l="HGA"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>One standard, graded blind</td></tr><tr><th scope="row">When it comes back</th><td class="no" data-l="Grading today"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Estimates that keep moving</td><td class="yes" data-l="HGA"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>A date you book, back within 30 days</td></tr><tr><th scope="row">The housing</th><td class="no" data-l="Grading today"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Plastic</td><td class="yes" data-l="HGA"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Aerospace glass, or Poly</td></tr><tr><th scope="row">Proof it's real</th><td class="no" data-l="Grading today"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>A printed label</td><td class="yes" data-l="HGA"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>NFT chip tied to a blockchain certificate</td></tr><tr><th scope="row">Booklets, trifolds, five folds, decks</th><td class="no" data-l="Grading today"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>Hard to find</td><td class="yes" data-l="HGA"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Every size, single to deck</td></tr></tbody>
       </table>
     </div>
     <h3 class="h2 v2-built">So we built what grading was missing.</h3>
-    <div class="hc-pics">
-      <figure><img src="./assets/gen/glass-card.webp" alt="Gloved hands holding a card in an HGA Glass housing" width="1200" height="896" loading="lazy"><figcaption>Aerospace glass<span class="v2-sub">The industry's first glass card housing, built to protect your card and show it off.</span></figcaption></figure>
-      <figure><img src="./assets/gen/chip-tap.webp" alt="A phone beside an HGA Glass slab with an RFID chip" width="1200" height="896" loading="lazy"><figcaption>RFID in every slab<span class="v2-sub">Tap with your phone to pull up your card's verified record.</span></figcaption></figure>
-      <figure><img src="./assets/gen/lab-loupe.webp" alt="A grader inspecting a card under a loupe" width="1200" height="896" loading="lazy"><figcaption>Graded blind<span class="v2-sub">Graders never see whose card it is, so every card is judged to one standard.</span></figcaption></figure>
+    <div class="pcx" data-pcx>
+      <a class="pc" href="#glass" data-fx="sheen">
+        <div class="pc-in">
+          <div class="pc-media"><img src="./assets/gen/glass-card.webp" alt="Gloved hands holding a card in an HGA Glass housing" width="1200" height="896" loading="lazy"><span class="pc-fx" aria-hidden="true"><i></i><i></i><i></i></span></div>
+          <span class="pc-glare" aria-hidden="true"></span>
+          <span class="pc-num" aria-hidden="true">01</span>
+          <div class="pc-body"><b class="pc-t">Aerospace glass</b><p>The industry's first glass card housing, built to protect your card and show it off.</p><span class="pc-more">Explore HGA Glass <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+        </div>
+      </a>
+      <a class="pc" href="how-it-works.html#nft" data-fx="rings">
+        <div class="pc-in">
+          <div class="pc-media"><img src="./assets/gen/chip-tap.webp" alt="A phone beside an HGA Glass slab with an NFT chip" width="1200" height="896" loading="lazy"><span class="pc-fx" aria-hidden="true"><i></i><i></i><i></i></span></div>
+          <span class="pc-glare" aria-hidden="true"></span>
+          <span class="pc-num" aria-hidden="true">02</span>
+          <div class="pc-body"><b class="pc-t">NFT chip in every slab</b><p>Tap with your phone to pull up your card's verified record.</p><span class="pc-more">How it works <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+        </div>
+      </a>
+      <a class="pc" href="grade-report.html#blind" data-fx="scan">
+        <div class="pc-in">
+          <div class="pc-media"><img src="./assets/gen/lab-loupe.webp" alt="A grader inspecting a card under a loupe" width="1200" height="896" loading="lazy"><span class="pc-fx" aria-hidden="true"><i></i><i></i><i></i></span></div>
+          <span class="pc-glare" aria-hidden="true"></span>
+          <span class="pc-num" aria-hidden="true">03</span>
+          <div class="pc-body"><b class="pc-t">Graded blind</b><p>Graders never see whose card it is, so every card is judged to one standard.</p><span class="pc-more">The Grade Report <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+        </div>
+      </a>
     </div>
     <p class="v2-cta"><a class="btn lg hm-cta" href="shop.html?h=glass#hero">Claim Your Slot <svg class="ico"><use href="#i-arrow"/></svg></a></p>
   </div>
@@ -316,6 +605,64 @@
       <div class="stat"><b>Up to <span data-count="80" data-suffix="%">0</span></b><span>More resale value</span></div>
     </div>
   </div>
+</section>
+
+<!-- How HGA works: pinned while you scroll; each scroll stretch moves to the next step. Steps stay clickable (they scroll to that step). -->
+<section class="sec hm-proc proc-pin" id="process" aria-labelledby="hm-proc-title">
+  <div class="wrap pin-head">
+    <p class="eb">How HGA works</p>
+    <h2 class="h2" id="hm-proc-title">See your card. See the process. <span class="red">See the proof.</span></h2>
+  </div>
+  <div class="pin-track" data-pin>
+    <div class="pin-stick">
+      <div class="wrap hm-proc-grid" data-proc>
+        <div class="hm-proc-l">
+          <ol class="pr-list"><li><button type="button" class="pr-step on" aria-pressed="true" data-pr="0"><span class="pr-n">01</span><span class="pr-t"><b>Receive it</b><span>Once your card arrives at HGA, it's checked in, unboxed on camera and documented.</span></span><i class="pr-bar" aria-hidden="true"></i></button></li><li><button type="button" class="pr-step" aria-pressed="false" data-pr="1"><span class="pr-n">02</span><span class="pr-t"><b>Inspect it</b><span>Your card is inspected, scanned and identified, so its condition and identity are on record from the start.</span></span><i class="pr-bar" aria-hidden="true"></i></button></li><li><button type="button" class="pr-step" aria-pressed="false" data-pr="2"><span class="pr-n">03</span><span class="pr-t"><b>Grade it</b><span>Software measures centering from high resolution images. Human graders judge corners, edges and surface.</span></span><i class="pr-bar" aria-hidden="true"></i></button></li><li><button type="button" class="pr-step" aria-pressed="false" data-pr="3"><span class="pr-n">04</span><span class="pr-t"><b>Protect it</b><span>Sealed in your choice of Poly or aerospace Glass, with an NFT chip and blockchain certification.</span></span><i class="pr-bar" aria-hidden="true"></i></button></li><li><button type="button" class="pr-step" aria-pressed="false" data-pr="4"><span class="pr-n">05</span><span class="pr-t"><b>Reveal it</b><span>Your final grade, four subgrades and full report, back within 30 days of your grading date.</span></span><i class="pr-bar" aria-hidden="true"></i></button></li></ol>
+          <div class="pin-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="pr-vis"><figure class="pr-fig on" data-prf aria-hidden="false"><img src="./assets/gen/arrival-box.webp" alt="An HGA shipping box on the receiving desk" width="1200" height="896" loading="lazy"><figcaption class="pk"><p class="pk-h">Order status</p><p class="pk-row"><span>Carrier</span><b>Delivered</b></p><p class="pk-row ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Checked in and documented</span></p><p class="pk-row"><span>Your grading date</span><b>Tue, Feb 9, 2027</b></p></figcaption></figure><figure class="pr-fig" data-prf aria-hidden="true"><img src="./assets/gen/lab-loupe.webp" alt="A grader inspecting a card under a loupe" width="1200" height="896" loading="lazy"><figcaption class="pk"><p class="pk-h">Inspection</p><p class="pk-row ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Scanned</span></p><p class="pk-row ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Identified</span></p><p class="pk-row ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Condition logged</span></p></figcaption></figure><figure class="pr-fig" data-prf aria-hidden="true"><img src="./assets/gen/centering.webp" alt="A card on a centering grid" width="1200" height="896" loading="lazy"><figcaption class="pk"><p class="pk-h">Grading</p><p class="pk-row"><span>Centering</span><b>55/45</b></p><p class="pk-sub">Measured from high resolution images</p><p class="pk-row"><span>Corners, edges, surface</span><b>Human graded</b></p></figcaption></figure><figure class="pr-fig" data-prf aria-hidden="true"><img src="./assets/gen/chip-tap.webp" alt="A phone beside an HGA Glass slab with an NFT chip" width="1200" height="896" loading="lazy"><figcaption class="pk"><p class="pk-h">Housing</p><p class="pk-row"><span>HGA Glass</span><b>Sealed</b></p><p class="pk-row ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>NFT chip verified</span></p><p class="pk-row ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Blockchain certificate</span></p></figcaption></figure><figure class="pr-fig pr-fig-phone" data-prf aria-hidden="true"><div class="pr-phone" role="img" aria-label="The HGA app revealing a grade: your grade is 10, Gem Mint">
+        <div class="pr-ph-notch"></div>
+        <div class="pr-ph-screen">
+          <p class="pr-ph-top">HGA</p>
+          <p class="pr-ph-yg">Your grade is…</p>
+          <div class="pr-ph-stage"><div class="pr-ph-card"><img class="pr-ph-front" src="./assets/cards-rt/charizard-ex.jpg" alt="" width="400" height="558" loading="lazy"><div class="pr-ph-back"><img src="./assets/hybrid_grading/hga-2700a46b.svg" alt="" width="91" height="22"></div></div></div>
+          <div class="pr-ph-grade"><b>10</b><span>Gem Mint</span></div>
+        </div>
+      </div><figcaption class="sr">Your final grade, four subgrades and full report</figcaption></figure></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Scroll-driven: the section pins and scroll progress picks the step. The bar eases toward the scroll position each frame, so nothing jumps.
+    (function () {
+      var track = document.querySelector("[data-pin]"); if (!track) return;
+      var box = track.querySelector("[data-proc]"), st = box.querySelectorAll("[data-pr]"), fg = box.querySelectorAll("[data-prf]"), dots = track.querySelectorAll(".pin-dots i");
+      var n = st.length, cur = -1, target = 0, eased = 0, running = false, top = 0, span = 1;
+      function measure() { var r = track.getBoundingClientRect(); top = r.top + scrollY; span = Math.max(1, r.height - innerHeight); }
+      function show(i) {
+        if (i === cur) return; cur = i;
+        st.forEach(function (b, k) { var on = k === i; b.classList.toggle("on", on); b.classList.toggle("done", k < i); b.setAttribute("aria-pressed", on ? "true" : "false"); });
+        fg.forEach(function (f, k) { f.classList.toggle("on", k === i); f.setAttribute("aria-hidden", k === i ? "false" : "true"); });
+        dots.forEach(function (d, k) { d.classList.toggle("on", k === i); });
+      }
+      function frame() {
+        eased += (target - eased) * 0.2;
+        if (Math.abs(target - eased) < 0.0004) eased = target;
+        var f = eased * n, i = Math.min(n - 1, Math.floor(target * n));
+        show(i);
+        st[i].style.setProperty("--sp", Math.max(0, Math.min(1, f - i)).toFixed(4));
+        if (eased !== target) requestAnimationFrame(frame); else running = false;
+      }
+      function onScroll() { var r = track.getBoundingClientRect(); span = Math.max(1, r.height - innerHeight); top = r.top + scrollY; target = Math.min(1, Math.max(0, -r.top / span)); if (!running) { running = true; requestAnimationFrame(frame); } }
+      addEventListener("scroll", onScroll, { passive: true });
+      addEventListener("resize", function () { measure(); onScroll(); });
+      addEventListener("load", function () { measure(); onScroll(); });
+      st.forEach(function (b, k) {
+        b.addEventListener("click", function () { measure(); scrollTo({ top: top + span * ((k + 0.5) / n), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); });
+      });
+      measure(); onScroll();
+    })();
+  </script>
 </section>
 
 <section class="sec hm-cal" id="how" aria-labelledby="hm-cal-title">
@@ -346,51 +693,34 @@
   </div>
 </section>
 
-
-
-<section class="sec hm-proc" id="process" aria-labelledby="hm-proc-title">
-  <div class="wrap hm-proc-grid" data-proc>
-    <div class="hm-proc-l">
-      <p class="eb">How HGA works</p>
-      <h2 class="h2" id="hm-proc-title">See your card. See the process. <span class="red">See the proof.</span></h2>
-      <ol class="pr-list"><li><button type="button" class="pr-step on" aria-pressed="true" data-pr="0"><span class="pr-n">01</span><span class="pr-t"><b>Receive it</b><span>Once your card arrives at HGA, it's checked in and documented.</span></span><i class="pr-bar" aria-hidden="true"></i></button></li><li><button type="button" class="pr-step" aria-pressed="false" data-pr="1"><span class="pr-n">02</span><span class="pr-t"><b>Inspect it</b><span>Your card is inspected, scanned and identified, so its condition and identity are on record from the start.</span></span><i class="pr-bar" aria-hidden="true"></i></button></li><li><button type="button" class="pr-step" aria-pressed="false" data-pr="2"><span class="pr-n">03</span><span class="pr-t"><b>Grade it</b><span>Software measures centering from high resolution images. Human graders judge corners, edges and surface.</span></span><i class="pr-bar" aria-hidden="true"></i></button></li><li><button type="button" class="pr-step" aria-pressed="false" data-pr="3"><span class="pr-n">04</span><span class="pr-t"><b>Protect it</b><span>Sealed in your choice of Poly or aerospace Glass, with an RFID chip and blockchain certification.</span></span><i class="pr-bar" aria-hidden="true"></i></button></li><li><button type="button" class="pr-step" aria-pressed="false" data-pr="4"><span class="pr-n">05</span><span class="pr-t"><b>Reveal it</b><span>Your final grade, four subgrades and full report, back within 30 days of your grading date.</span></span><i class="pr-bar" aria-hidden="true"></i></button></li></ol>
-    </div>
-    <div class="pr-vis"><figure class="pr-fig on" data-prf aria-hidden="false"><img src="./assets/gen/arrival-box.webp" alt="An HGA shipping box on the receiving desk" width="1200" height="896" loading="lazy"><figcaption class="pk"><p class="pk-h">Order status</p><p class="pk-row"><span>Carrier</span><b>Delivered</b></p><p class="pk-row ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Checked in and documented</span></p><p class="pk-row"><span>Your grading date</span><b>Tue, Feb 9, 2027</b></p></figcaption></figure><figure class="pr-fig" data-prf aria-hidden="true"><img src="./assets/gen/lab-loupe.webp" alt="A grader inspecting a card under a loupe" width="1200" height="896" loading="lazy"><figcaption class="pk"><p class="pk-h">Inspection</p><p class="pk-row ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Scanned</span></p><p class="pk-row ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Identified</span></p><p class="pk-row ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Condition logged</span></p></figcaption></figure><figure class="pr-fig" data-prf aria-hidden="true"><img src="./assets/gen/centering.webp" alt="A card on a centering grid" width="1200" height="896" loading="lazy"><figcaption class="pk"><p class="pk-h">Grading</p><p class="pk-row"><span>Centering</span><b>55/45</b></p><p class="pk-sub">Measured from high resolution images</p><p class="pk-row"><span>Corners, edges, surface</span><b>Human graded</b></p></figcaption></figure><figure class="pr-fig" data-prf aria-hidden="true"><img src="./assets/gen/chip-tap.webp" alt="A phone beside an HGA Glass slab with an RFID chip" width="1200" height="896" loading="lazy"><figcaption class="pk"><p class="pk-h">Housing</p><p class="pk-row"><span>HGA Glass</span><b>Sealed</b></p><p class="pk-row ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>RFID verified</span></p><p class="pk-row ok"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Blockchain certificate</span></p></figcaption></figure><figure class="pr-fig pr-fig-phone" data-prf aria-hidden="true"><div class="pr-phone" role="img" aria-label="The HGA app revealing a grade: your grade is 10, Gem Mint">
-        <div class="pr-ph-notch"></div>
-        <div class="pr-ph-screen">
-          <p class="pr-ph-top">HGA</p>
-          <p class="pr-ph-yg">Your grade is…</p>
-          <div class="pr-ph-stage"><div class="pr-ph-card"><img class="pr-ph-front" src="./assets/cards-rt/charizard-ex.jpg" alt="" width="400" height="558" loading="lazy"><div class="pr-ph-back"><img src="./assets/hybrid_grading/hga-2700a46b.svg" alt="" width="91" height="22"></div></div></div>
-          <div class="pr-ph-grade"><b>10</b><span>Gem Mint</span></div>
-        </div>
-      </div><figcaption class="sr">Your final grade, four subgrades and full report</figcaption></figure></div>
+<section class="sec hm-offer" id="offer" aria-labelledby="hm-offer-title">
+  <div class="wrap">
+    <h2 class="h2" id="hm-offer-title">Presale pricing. <span class="red">Up to 80% off.</span></h2>
+    <!-- Glass is the call-out; Poly is offered as a single link -->
+    <article class="px-glass rv">
+      <div class="px-media" aria-hidden="true"><span class="px-glow"></span><img src="./assets/pack/glass/hero-ohtani-finest.webp" alt="" width="760" height="1246" loading="lazy"></div>
+      <div class="px-body">
+        <img class="px-wm" src="./assets/hybrid_grading/hga-glass-828ebfd2.svg" alt="HGA Glass" width="120" height="20">
+        <p class="px-t">Aerospace glass housing for your best cards.</p>
+        <p class="px-price"><b>$200</b><s>$600</s><span>a card</span><em>Save $400 a card</em></p>
+        <ul class="px-inc">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Metal and glass, tooled to the card</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>NFT chip in the label</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Full grading report and four free subgrades</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Back within 30 days of your grading date</li>
+        </ul>
+        <a class="btn lg hm-cta" href="shop.html?h=glass#hero">Claim Your Glass Slot <svg class="ico"><use href="#i-arrow"/></svg></a>
+      </div>
+    </article>
+    <p class="px-poly"><img src="./assets/hybrid_grading/hga-poly-69885480.svg" alt="HGA Poly" width="88" height="16"><span class="px-sep" aria-hidden="true"></span><span>Professional grading at <b>$29 a card</b> <s>$150</s></span><a href="shop.html?h=poly#hero">Claim a Poly slot <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
   </div>
-  <script>
-    // How HGA works: one step at a time; click a step to jump; hover or focus pauses; reduced motion means no autoplay.
-    document.querySelectorAll("[data-proc]").forEach(function (box) {
-      var st = box.querySelectorAll("[data-pr]"), fg = box.querySelectorAll("[data-prf]"), i = 0, t, hold = false;
-      var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      function show(n) {
-        i = (n + st.length) % st.length;
-        st.forEach(function (b, k) { var on = k === i; b.classList.remove("on"); b.setAttribute("aria-pressed", on ? "true" : "false"); if (on) { void b.offsetWidth; b.classList.add("on"); } });
-        fg.forEach(function (f, k) { f.classList.toggle("on", k === i); f.setAttribute("aria-hidden", k === i ? "false" : "true"); });
-      }
-      function run() { clearInterval(t); if (!reduce && !hold) t = setInterval(function () { show(i + 1); }, 4200); box.classList.toggle("held", hold || reduce); }
-      st.forEach(function (b, k) { b.addEventListener("click", function () { show(k); run(); }); });
-      box.addEventListener("mouseenter", function () { hold = true; run(); });
-      box.addEventListener("mouseleave", function () { hold = false; show(i); run(); });
-      box.addEventListener("focusin", function () { hold = true; run(); });
-      box.addEventListener("focusout", function () { hold = false; run(); });
-      new IntersectionObserver(function (es) { if (es[0].isIntersecting) { show(i); run(); } else { clearInterval(t); } }).observe(box);
-    });
-  </script>
 </section>
 
 <section class="sec pf" id="proof" aria-labelledby="pf-title">
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="pf-rfid" viewBox="0 0 24 24"><path d="M6 8.32a7.43 7.43 0 0 1 0 7.36"/><path d="M9.46 6.21a11.76 11.76 0 0 1 0 11.58"/><path d="M12.91 4.1a15.91 15.91 0 0 1 .01 15.8"/><path d="M16.37 2a20.16 20.16 0 0 1 0 20"/></symbol><symbol id="pf-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol><symbol id="pf-chain" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol></svg>
   <div class="wrap">
     <h2 class="h2" id="pf-title">See exactly why you got your grade. <span class="red">Verify it anytime.</span></h2>
-    <p class="lede pf-lede">Every grade comes with the reasoning behind it, and every housing carries an RFID chip linked to your card's permanent record.</p>
+    <p class="lede pf-lede">Every grade comes with the reasoning behind it, and every housing carries an NFT chip linked to your card's permanent record.</p>
     <div class="pf-grid">
       <div class="pf-report" data-pf-report aria-label="Sample grading report">
         <div class="pf-top">
@@ -411,7 +741,7 @@
           <img class="pf-slab" src="./assets/slabs/glass-gengar.webp" alt="" width="720" height="1207" loading="lazy">
           <span class="pf-rings"><i></i><i></i><i></i></span>
           <div class="pf-phone"><div class="pf-phone-in">
-            <span class="pf-chip"><svg><use href="#pf-rfid"/></svg> RFID read</span>
+            <span class="pf-chip"><svg><use href="#pf-rfid"/></svg> NFT chip read</span>
             <b>Gengar</b>
             <small>Trainer Gallery &middot; Grade 10</small>
             <span class="pf-ok"><svg><use href="#pf-shield"/></svg> Verified record</span>
@@ -449,33 +779,55 @@
   </script>
 </section>
 
-<section class="sec hm-offer" id="offer" aria-labelledby="hm-offer-title">
+<!-- Housings: Glass or Poly, chosen per card. Approved content-pack copy. -->
+<section class="sec hz" id="housings" aria-labelledby="hz-title">
   <div class="wrap">
-    <h2 class="h2" id="hm-offer-title">Presale pricing. <span class="red">Up to 80% off.</span></h2>
-    <div class="hm-plans">
-      <article class="hm-plan glass">
-        <img src="./slabs/ohtani/360.webp" alt="HGA Glass slab" width="360" height="603" loading="lazy">
-        <div>
-          <img class="hm-wm" src="./assets/hybrid_grading/hga-glass-828ebfd2.svg" alt="HGA Glass" width="96" height="16">
-          <p>Aerospace glass housing for your best cards.</p>
-          <p class="hm-price"><b>$200</b> <s>$600</s> <span>a card</span></p>
-          <a class="btn" href="shop.html?h=glass#hero">Claim Your Slot</a>
-        </div>
+    <div class="hz-head">
+      <p class="eb">Housings</p>
+      <h2 class="h2" id="hz-title">A case for <span class="red">every card.</span></h2>
+      <p class="lede">Glass for the cards you show. Poly for every card size on the market. Choose per card, in the same order.</p>
+    </div>
+    <div class="hz-grid">
+      <article class="hz-card hz-glass rv">
+        <header><img src="./assets/hybrid_grading/hga-glass-828ebfd2.svg" alt="HGA Glass" width="96" height="16"><span>Premium cards &middot; every size</span></header>
+        <dl>
+          <div><dt>The housing</dt><dd>Metal and glass. A display piece, not a plastic slab.</dd></div>
+          <div><dt>Sizes</dt><dd>Tooled to every card size. If no exact fit, the nearest is selected and you are told.</dd></div>
+          <div><dt>Made for</dt><dd>The cards you show.</dd></div>
+          <div><dt>A Flawless 10</dt><dd>HGA Flawless, in Glass.</dd></div>
+        </dl>
       </article>
-      <article class="hm-plan">
-        <img src="./slabs/items/13966/clear_case/360.webp" alt="HGA Poly slab" width="360" height="599" loading="lazy">
-        <div>
-          <img class="hm-wm" src="./assets/hybrid_grading/hga-poly-69885480.svg" alt="HGA Poly" width="88" height="16">
-          <p>Professional grading at $29 a card during presale.</p>
-          <p class="hm-price"><b>$29</b> <s>$150</s> <span>a card</span></p>
-          <a class="btn ghost" href="shop.html?h=poly#hero">Claim Your Slot</a>
-        </div>
+      <span class="hz-or" aria-hidden="true">or</span>
+      <article class="hz-card rv">
+        <header><img src="./assets/hybrid_grading/hga-poly-69885480.svg" alt="HGA Poly" width="88" height="16"><span>Every card &middot; every size</span></header>
+        <dl>
+          <div><dt>The housing</dt><dd>Poly, tooled to the card.</dd></div>
+          <div><dt>Sizes</dt><dd>60+ sizes, matched automatically. If no case exists for your card yet, we make one at no extra fee.</dd></div>
+          <div><dt>Made for</dt><dd>Every card you grade.</dd></div>
+          <div><dt>A Flawless 10</dt><dd>Moves to Glass, Flawless label, no charge.</dd></div>
+        </dl>
       </article>
     </div>
-    <p class="hm-fine">Presale pricing ends Jan 31. Both include RFID, a full grading report and four subgrades. <a href="faq.html">All questions</a> &middot; <a href="about.html">Where we've been</a></p>
+    <p class="hz-same"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Both come with the same label, chip and Grade Report, and four free subgrades.</p>
   </div>
 </section>
 
+<!-- Built for the cards you show: Glass slabs on a lit shelf. Its own section, after the metrics. -->
+<section class="sec gx gx-showcase" id="showcase" aria-labelledby="gx-show-title">
+  <div class="wrap">
+    <div class="gx-show">
+      <h2 class="h2 gx-sub" id="gx-show-title">Built for the cards <span class="red">you show.</span></h2>
+      <p class="gx-show-lede">Sports and TCG, all in HGA Glass.</p>
+      <ul class="gx-shelf" aria-label="Cards in HGA Glass">
+        <li class="rv"><img src="./assets/pack/glass/ohtani-chrome.webp" alt="Shohei Ohtani, 2025 Topps Chrome Superfractor 1/1, in HGA Glass, graded 10" width="760" height="1246" loading="lazy"><span><b>Shohei Ohtani</b>Topps Chrome Superfractor 1/1</span></li>
+        <li class="rv"><img src="./assets/pack/glass/meowth-ex.webp" alt="Meowth ex in HGA Glass, graded 10" width="480" height="787" loading="lazy"><span><b>Meowth ex</b>Special Illustration Rare</span></li>
+        <li class="rv"><img src="./assets/pack/glass/rayquaza-gx.webp" alt="Rayquaza GX in HGA Glass, graded 10" width="480" height="787" loading="lazy"><span><b>Rayquaza GX</b>Full Art</span></li>
+        <li class="rv"><img src="./assets/pack/glass/mega-greninja-ex.webp" alt="Mega Greninja ex in HGA Glass, graded 10" width="480" height="787" loading="lazy"><span><b>Mega Greninja ex</b>Special Illustration Rare</span></li>
+      </ul>
+    </div>
+    <p class="v2-cta"><a class="btn lg hm-cta" href="shop.html?h=glass#hero">Claim Your Slot <svg class="ico"><use href="#i-arrow"/></svg></a></p>
+  </div>
+</section>
 
 <section class="sec hm-faq" id="hm-faq" aria-labelledby="hm-faq-title">
   <div class="wrap hm-faq-grid">
@@ -496,6 +848,7 @@
     </div>
   </div>
 </section>
+
 <script>
   // Morphing housing (after Rachel Tomi's hga-homepage hero). Auto plays single to deck; drag turns it;
   // click or Enter shows the next size; hover or focus pauses; reduced motion means a still housing.
@@ -584,7 +937,7 @@
     <div class="top">
       <div class="lockup">
         <img src="./assets/hybrid_grading/hga-hybrid-grading-approach-104fc1af.svg" alt="HGA, Hybrid Grading Approach" width="180" height="55">
-        <p>Graded anonymously to a published standard, with every grade explained and every card housed. All sports and all TCG.</p>
+        <p>Graded blind to a published standard. Every grade explained. Every card housed. All sports. All TCG.</p>
         <div class="marks">
           <img src="./assets/hybrid_grading/hga-poly-69885480.svg" alt="HGA Poly" width="72" height="13">
           <img src="./assets/hybrid_grading/hga-glass-828ebfd2.svg" alt="HGA Glass" width="80" height="13">
@@ -593,20 +946,19 @@
       <div>
         <h4>Presale</h4>
         <ul>
-          <li><a href="pass.html">Grading pass</a></li>
+          <li><a href="shop.html#hero">Claim your slot</a></li>
+          <li><a href="pass.html">Grading slot</a></li>
           <li><a href="cart.html">Cart</a></li>
-          <li><a href="index.html#how">How it works</a></li>
-          <li><a href="shop.html#hero">Every possible cost</a></li>
-          <li><a href="faq.html#presale">Presale questions</a></li>
         </ul>
       </div>
       <div>
         <h4>Grading</h4>
         <ul>
+          <li><a href="how-it-works.html">How it works</a></li>
           <li><a href="grading-standards.html">Grading standards</a></li>
-          <li><a href="grading-standards.html#scale">The grading scale</a></li>
-          <li><a href="grading-standards.html#housings">HGA Poly and HGA Glass</a></li>
+          <li><a href="grade-report.html">The Grade Report</a></li>
           <li><a href="report.html">Sample Grade Report</a></li>
+          <li><a href="the-reveal.html">The Reveal</a></li>
         </ul>
       </div>
       <div>
@@ -615,15 +967,39 @@
           <li><a href="about.html">About HGA</a></li>
           <li><a href="legacy.html">Legacy HGA</a></li>
           <li><a href="legacy.html#lookup">Cert lookup</a></li>
-          <li><a href="faq.html">All questions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="knowledge-base.html">Knowledge base</a></li>
+          <li><a href="faq.html">FAQ</a></li>
         </ul>
       </div>
     </div>
     <div class="bottom">
-      <span>&copy; 2026 HGA &middot; Hybrid Grading Approach &middot; Chandler, Arizona</span>
+      <span>&copy; 2026 HGA &middot; Hybrid Grading Approach &middot; A uCollect company &middot; Chandler, Arizona</span>
       <span><a href="#">Presale terms</a> &middot; <a href="#">Terms</a> &middot; <a href="#">Privacy</a></span>
     </div>
   </div>
 </footer>
+<script>
+  // Premium cards: tilt toward the cursor with a moving glare; live effects only while on screen.
+  (function () {
+    var wrap = document.querySelector("[data-pcx]"); if (!wrap) return;
+    var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches, fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!reduce && "IntersectionObserver" in window) new IntersectionObserver(function (es) { wrap.classList.toggle("live", es[0].isIntersecting); }, { threshold: .15 }).observe(wrap);
+    if (reduce || !fine) return;
+    wrap.querySelectorAll(".pc").forEach(function (c) {
+      var raf = 0, ev;
+      function apply() { raf = 0; var r = c.getBoundingClientRect(), x = (ev.clientX - r.left) / r.width, y = (ev.clientY - r.top) / r.height;
+        c.style.setProperty("--ry", ((x - .5) * 10).toFixed(2) + "deg"); c.style.setProperty("--rx", ((.5 - y) * 8).toFixed(2) + "deg");
+        c.style.setProperty("--mx", (x * 100).toFixed(1) + "%"); c.style.setProperty("--my", (y * 100).toFixed(1) + "%"); }
+      c.addEventListener("pointerenter", function () { c.classList.add("tilting"); });
+      c.addEventListener("pointermove", function (e) { ev = e; if (!raf) raf = requestAnimationFrame(apply); });
+      c.addEventListener("pointerleave", function () { c.classList.remove("tilting"); ["--rx", "--ry"].forEach(function (k) { c.style.setProperty(k, "0deg"); }); c.style.setProperty("--mx", "50%"); c.style.setProperty("--my", "30%"); });
+    });
+  })();
+</script>
 </body>
 </html>

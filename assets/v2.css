@@ -2419,3 +2419,93 @@ img.rvs-av{object-fit:cover;background:#222;padding:0}
 .hc-tbl caption{display:block}
 @media (max-width:720px){.hc-tbl th,.hc-tbl td{padding:12px 8px}.hc-tbl tbody th{font-size:13px}}
 .hc-pics{margin-top:clamp(40px,5vw,72px)}
+
+/* ---------- Header dropdown: Grading ---------- */
+.hdd{position:relative;display:flex;align-items:center}
+.hdd-btn{font:inherit;letter-spacing:inherit;text-transform:inherit;color:var(--text-2);background:none;border:0;padding:8px 12px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;position:relative}
+.hdd-btn::after{content:"";position:absolute;left:50%;bottom:-2px;width:5px;height:5px;border-radius:50%;background:var(--red);transform:translateX(-50%) scale(0);transition:transform .2s}
+.hdd-btn:hover,.hdd.open .hdd-btn,.hdd.cur .hdd-btn{color:#fff}
+.hdd.cur .hdd-btn{font-weight:700}
+.hdd.cur .hdd-btn::after{transform:translateX(-50%) scale(1)}
+.hdd-btn:focus-visible{outline:2px solid var(--red);outline-offset:2px;border-radius:6px}
+.hdd-chev{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.hdd.open .hdd-chev{transform:rotate(180deg)}
+.hdd-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translate(-50%,6px);min-width:290px;padding:8px;border-radius:14px;background:var(--paper);border:1px solid var(--line-2);box-shadow:0 24px 50px rgba(0,0,0,.45);opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s;z-index:60}
+.hdd-menu::before{content:"";position:absolute;left:0;right:0;top:-14px;height:14px}
+.hdd.open .hdd-menu{opacity:1;visibility:visible;transform:translate(-50%,0)}
+@media (hover:hover) and (min-width:981px){.hdd:hover .hdd-menu{opacity:1;visibility:visible;transform:translate(-50%,0)}.hdd:hover .hdd-chev{transform:rotate(180deg)}}
+.hnav .hdd-menu a{display:block;padding:11px 12px;border-radius:10px;text-transform:none;letter-spacing:0;border-bottom:0}
+.hnav .hdd-menu a::after{display:none}
+.hdd-menu a b{display:block;color:#fff;font-size:15px;font-weight:700}
+.hdd-menu a span{display:block;margin-top:2px;font-family:var(--sans,inherit);font-size:13px;font-weight:400;color:var(--text-2)}
+.hdd-menu a:hover,.hdd-menu a:focus-visible{background:rgba(255,255,255,.06)}
+.hdd-menu a[aria-current="page"]{background:rgba(230,36,41,.12)}
+.hdd-menu a[aria-current="page"] b{color:#ff6b6e}
+@media (max-width:980px){
+  .hdd{display:block;border-bottom:1px solid var(--line)}
+  .hdd-btn{width:100%;justify-content:space-between;padding:16px 0;font-size:15px}
+  .hdd-btn::after{display:none}
+  .hdd-menu{position:static;transform:none;opacity:1;visibility:visible;display:none;min-width:0;padding:0 0 12px 12px;border:0;border-radius:0;background:none;box-shadow:none}
+  .hdd-menu::before{display:none}
+  .hdd.open .hdd-menu{display:block;transform:none}
+  .hnav .hdd-menu a{padding:10px 0;border-radius:0}
+  .hdd-menu a:hover,.hdd-menu a:focus-visible{background:none}
+  .hdd-menu a[aria-current="page"]{background:none}
+}
+@media (prefers-reduced-motion:reduce){.hdd-menu,.hdd-chev{transition:none}}
+
+/* ---------- Footer: five columns (lockup + Presale, Grading, Company, Resources) ---------- */
+.foot .top{grid-template-columns:1.4fr repeat(4,1fr);gap:36px}
+@media (max-width:1024px){.foot .top{grid-template-columns:repeat(4,1fr)}.foot .lockup{grid-column:1/-1}}
+@media (max-width:640px){.foot .top{grid-template-columns:1fr 1fr}}
+
+/* ==========================================================================
+   TYPE SCALE: one scale for every inner page (desktop 1440 -> mobile 390).
+   Scoped to body:not(.hm-page) main so the homepage, header and footer are
+   untouched. Page <style> blocks use these tokens for their own components.
+   ========================================================================== */
+:root{
+  --t-h1:clamp(38px,calc(28.3429px + 2.47619vw),64px);   /* page hero H1 */
+  --t-h2:clamp(30px,calc(24.0571px + 1.52381vw),46px);   /* section H2 */
+  --t-sub:clamp(26px,calc(23.0286px + .7619vw),34px);    /* sub-section display line */
+  --t-card:clamp(18px,calc(17.2571px + .19048vw),20px);  /* card / item / step title */
+  --t-lede:clamp(17px,calc(15.8857px + .28571vw),20px);  /* lede / intro */
+  --t-body:clamp(15px,calc(14.6286px + .09524vw),16px);  /* body in cards, lists, steps */
+  --t-long:clamp(16px,calc(15.6286px + .09524vw),17px);  /* long-form answers / articles */
+  --t-meta:13px;                                          /* captions, meta, fine print */
+  --t-eb:12px;                                            /* eyebrows, mock-UI labels */
+}
+body:not(.hm-page) main .h1{font-size:var(--t-h1);line-height:1.04}
+body:not(.hm-page) main .h2{font-size:var(--t-h2);line-height:1.06}
+body:not(.hm-page) main .lede{font-size:var(--t-lede);line-height:1.5}
+body:not(.hm-page) main .eb{font-size:var(--t-eb)}
+
+/* Shared inner-page components mapped onto the scale (source rules live in hga.css / v2.css above) */
+/* sub-section display lines: 34 -> 26 */
+body:not(.hm-page) main :is(.h3,.mission,.rules li,.rp-grade h2,.pillars h3,.tier h3){font-size:var(--t-sub);line-height:1.15}
+/* card / item / step titles: 20 -> 18 */
+body:not(.hm-page) main :is(.rebuilt h3,.path h3,.rc-steps b,.next b,.ty-card h3,.tl6 h3,.scale3 h3,.blind3 h3,.pol h3,.inc-grid h3,.rp-h,.rp-chain b,.rp-notes b,.asked h3,.bt h3,.ps-t,.rc b,.ab-facts dd,.pillars b,.rv-q blockquote,.rv-q cite,.glass-chip b,.co-sec legend,.gcal-line,.after5 b,.auto3 h3,.rp-ex b,.rp-ex h3){font-size:var(--t-card);line-height:1.25}
+/* body in cards, lists, steps: 16 -> 15 */
+body:not(.hm-page) main :is(.rebuilt p,.pillars p,.path p,.rc-steps p,.rc-notify p,.inc-grid p,.scale3 p,.gc .cen,.gc .out,.gc .sum,.pol p,.pol a,.rp-ex p,.rp-notes p,.rp-grade p,.ty-card p,.buy-trust li,.buy-trust b,.buy-trust span,.asked .q b,.asked .q p,.after5 p,.cmp-r span,.cmp-r s,.ps-steps p,.gcal-pts li,.gcal-pts span,.cart-empty p,.booklet p,.sg-intro p,.blind3 p,.tl6 p,.next p,.auto3 p,.usp p,.fq-cats button,.fd p,.rv-over blockquote){font-size:var(--t-body)}
+/* long-form answers (FAQ accordions everywhere): 17 -> 16 */
+body:not(.hm-page) main details .a{font-size:var(--t-long)}
+body:not(.hm-page) main details .a :is(p,li,b,a){font-size:inherit}
+/* small meta, captions, fine print: 13 */
+body:not(.hm-page) main :is(.gs-stats span,.spec b,.rc-g small,.rp-subs small,.sevscale small,.ho-d,.buy-total p,.buy-total s,.ho-more,.xnote,.stripe,.co-place .fine,.co-summ .sl span,.gcal-ticket em,.watch span,.subnav a,.hint,.fnote,.ugc-note,.cta-note){font-size:var(--t-meta)}
+/* eyebrows, labels, chips, mock-UI labels: 12 */
+body:not(.hm-page) main :is(.mono,.pill,.crumbs,.crumbs a,.crumbs span,.ab-facts dt,.ab-book figcaption,.bk-art figcaption,.fq-cats button span,.rp-dl dt,.rp-subs span,.fd .sev,.rp-chain em,.flow,.flow li,.flow li *,.ps-ne,.presale-cta b,.spec span,.tl6 em,.scale small,.gn span,.rc-s span,.rc-f i,.gal-badge,.gal-badge span,.th span,.th-pin,.usp .proof,.bt .k,.after5 .when,.gcal-top span,.gcal-wd li,.gcal-legend span,.gcal-ticket span,.rc .n,.kb-k,.tbl th){font-size:var(--t-eb)}
+body:not(.hm-page) main .ho-tag{font-size:var(--t-eb)!important}
+body:not(.hm-page) main .usps .usp .proof{font-size:var(--t-eb)}
+/* product titles in the buy box read as a sub-section line, not a page hero */
+body:not(.hm-page) main :is(.buy-h1,.rp-title){font-size:var(--t-sub);line-height:1.08}
+/* quieter chrome on About: no inner frame on the rules panel */
+body:not(.hm-page) main .rules::before{display:none}
+
+/* second pass: remaining in-between sizes */
+body:not(.hm-page) main :is(.faq summary,.facts3 b,.rep4 b,.fd b,.rp-ex h4,.bstep legend,.co-sec legend){font-size:var(--t-card);line-height:1.3}
+body:not(.hm-page) main :is(.co-help,.chk span,.co-saved p,.fq-ask p,.tier .check li,.presale-cta span,.tbd,.facts3 p,.hbody p,.gc li,.gc b,.gnote,.tbl td,.sg-notes b,.sg-notes p,.rep4 p,.np,.lookup .small,.buy-sub,.usps .usp b,.bt p,.rp-dl dd,.rp-auth dt,.rp-auth dd,.rp-chain p,.sh-proof li,.buy-inc,.rc .b p,.ps-body b,.ty-lines .sl span,.rp-title span){font-size:var(--t-body)}
+body:not(.hm-page) main :is(p.small,p.small span,.glass-chip div,.jmarq-set figcaption,.buy-alt){font-size:var(--t-meta)}
+body:not(.hm-page) main .fq-h{font-size:var(--t-eb)}
+
+/* Presale page: the buy-box headline sits beside the price, so it uses the section size, not the 64px page size */
+body:not(.hm-page) main .shophero .sh-buy .h1{font-size:clamp(28px,calc(1.15vw + 23.5px),40px);line-height:1.08}

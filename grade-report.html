@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Grade Report | Every defect, located and rated</title>
+<meta name="description" content="The HGA Grade Report: the card grade, four subgrades, and every defect located on the card, rated by severity and imaged. Public on the cert.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0E0E0E">
+<link rel="preload" href="./assets/fonts/bc-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./assets/hga.css?v=80e4d4a7">
+<link rel="stylesheet" href="./assets/v2.css?v=80e4d4a7">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="./assets/v2.js?v=80e4d4a7"></script>
+<script defer src="./assets/site.js?v=80e4d4a7"></script>
+<script defer src="./assets/shop.js?v=80e4d4a7"></script>
+<style>
+/* Grade Report explainer (page scoped, gr- prefix) */
+.gr-hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,5vw,72px);align-items:center}
+.gr-hero .h1{max-width:11em}
+.gr-hero .lede{max-width:32em}
+.gr-acts{margin-top:32px;display:flex;flex-wrap:wrap;gap:12px}
+.gr-vis{position:relative;display:flex;justify-content:center;align-items:center}
+.gr-vis::before{content:"";position:absolute;width:min(520px,120%);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(230,36,41,.3),transparent 62%);pointer-events:none}
+.gr-vis img{position:relative;width:min(340px,78%);height:auto;filter:drop-shadow(0 30px 50px rgba(0,0,0,.65))}
+@media (max-width:860px){.gr-hero .wrap{grid-template-columns:minmax(0,1fr)}.gr-vis{order:-1}.gr-vis img{width:min(200px,50%)}}
+
+.gr-tag{font-size:var(--t-meta);color:var(--muted);white-space:nowrap}
+
+/* mock report card */
+.gr-rc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.gr-rc-h{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:18px clamp(18px,3vw,32px);border-bottom:1px solid var(--line);background:var(--surface-2)}
+.gr-rc-h .t{font-weight:700;font-size:var(--t-body);line-height:1.2}
+.gr-rc-h .t small{display:block;font-weight:400;font-size:var(--t-meta);color:var(--muted)}
+.gr-rc-h .cert{font-family:var(--code);font-size:var(--t-meta);color:var(--text-2)}
+.gr-ok{display:inline-flex;align-items:center;gap:8px;font-size:var(--t-meta);font-weight:600;color:#5CD98A}
+.gr-ok i{width:7px;height:7px;border-radius:50%;background:#5CD98A}
+.gr-rc-h .gr-tag{margin-left:auto}
+.gr-rc-b{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}
+.gr-rc-g{padding:clamp(22px,3vw,34px) clamp(18px,3vw,32px);border-right:1px solid var(--line)}
+.gr-big{display:flex;align-items:center;gap:20px}
+.gr-big b{font-family:var(--sans);font-weight:800;font-size:clamp(76px,8vw,104px);line-height:.8;letter-spacing:-.05em;color:var(--red)}
+.gr-big span{display:block;font-size:var(--t-meta);font-weight:600;color:var(--muted)}
+.gr-big strong{display:block;font-size:var(--t-sub);font-weight:800;letter-spacing:-.03em;line-height:1;margin-top:6px}
+.gr-idn{margin-top:24px}
+.gr-idn b{display:block;font-size:var(--t-card)}
+.gr-idn span{color:var(--text-2);font-size:var(--t-body)}
+.gr-sum{margin-top:16px;font-size:var(--t-body)}
+.gr-meta{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;margin:22px 0 0}
+.gr-meta div{font-size:var(--t-body)}
+.gr-meta dt{font-size:var(--t-meta);color:var(--muted)}
+.gr-meta dd{margin:2px 0 0;font-weight:500}
+.gr-rc-s{padding:clamp(22px,3vw,34px) clamp(18px,3vw,32px)}
+.gr-rc-s h3{margin-bottom:12px;font-size:var(--t-card)}
+.gr-sg{list-style:none;margin:0;padding:0}
+.gr-sg li{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--line)}
+.gr-sg li:last-child{border-bottom:1px solid var(--line)}
+.gr-sg .v{font-weight:800;font-size:28px;letter-spacing:-.03em;line-height:1}
+.gr-sg .v.lo{color:var(--red-text)}
+.gr-sg .v.na{color:var(--muted)}
+.gr-sg .k{font-weight:700;font-size:var(--t-body)}
+.gr-sg .d{font-size:var(--t-meta);color:var(--muted);text-align:right}
+.gr-eye{margin-top:16px;font-size:var(--t-body);color:var(--text-2)}
+.gr-eye b{color:var(--text)}
+@media (max-width:860px){.gr-rc-b{grid-template-columns:minmax(0,1fr)}.gr-rc-g{border-right:0;border-bottom:1px solid var(--line)}}
+@media (max-width:480px){.gr-rc-h .gr-tag{margin-left:0}.gr-sg li{grid-template-columns:44px minmax(0,1fr);row-gap:2px}.gr-sg .d{grid-column:2;text-align:left}.gr-meta{grid-template-columns:1fr}}
+
+/* findings: one scan, one pin, one finding, the scale */
+.gr-find{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:clamp(36px,6vw,96px);align-items:start}
+.gr-find .h2{margin-top:18px}
+.gr-find .lede{margin-top:18px}
+.gr-scan{position:relative;margin:0;max-width:400px;border-radius:var(--r-sm);overflow:hidden;box-shadow:0 24px 50px rgba(0,0,0,.55);background:#111}
+.gr-scan img{display:block;width:100%;height:auto}
+.gr-pin{position:absolute;left:80%;top:12%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;font-weight:700;font-size:var(--t-meta);display:grid;place-items:center;box-shadow:0 0 0 3px #fff}
+.gr-fd{margin-top:36px;display:flex;gap:16px;padding-top:28px;border-top:1px solid var(--ink-line)}
+.gr-fd .n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-weight:700;font-size:var(--t-meta);display:grid;place-items:center}
+.gr-fd b{display:block;font-size:var(--t-card,20px);line-height:1.25;color:#fff}
+.gr-fd p{margin-top:6px;font-size:var(--t-body,16px);color:var(--ink-text)}
+.gr-fd dl{display:flex;flex-wrap:wrap;gap:4px 28px;margin:14px 0 0;font-size:var(--t-body,16px)}
+.gr-fd dt{display:inline;color:rgba(255,255,255,.55)}
+.gr-fd dd{display:inline;margin:0 0 0 6px;color:#fff;font-weight:600}
+.gr-sev{margin-top:40px}
+.gr-sev h3{font-size:var(--t-card,20px);color:#fff}
+.gr-sev ol{list-style:none;margin:14px 0 0;padding:0}
+.gr-sev li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;padding:12px 0;border-top:1px solid rgba(255,255,255,.08);font-size:var(--t-body,16px);color:var(--ink-text)}
+.gr-sev li b{color:#fff;font-weight:600}
+.gr-sev li.on b{color:var(--red-text,#ff6b6e)}
+.gr-fine{margin-top:20px;font-size:13px;color:rgba(255,255,255,.55)}
+.gr-fine a{color:#fff}
+@media (max-width:960px){.gr-find{grid-template-columns:minmax(0,1fr)}.gr-scan{max-width:340px}}
+@media (max-width:480px){.gr-scan{max-width:260px}.gr-sev li{grid-template-columns:96px minmax(0,1fr);gap:12px}}
+
+/* subgrades */
+.gr-subs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.gr-subs>div,.gr-two>div{background:var(--surface);border-radius:var(--r);padding:26px 24px}
+.gr-subs .v{font-weight:800;font-size:40px;letter-spacing:-.04em;line-height:1}
+.gr-subs .v.lo{color:var(--red-text)}
+.gr-subs h3,.gr-two h3{font-size:var(--t-card);margin:10px 0 6px}
+.gr-subs p,.gr-two p{font-size:var(--t-body);color:var(--text-2)}
+.gr-cent{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:var(--t-meta)}
+.gr-cent dt{color:var(--muted)}
+.gr-cent dd{margin:0;font-family:var(--code);font-weight:600;text-align:right}
+.gr-two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.gr-two .pill{margin-bottom:4px}
+.gr-subnote{margin-top:16px}
+@media (max-width:1000px){.gr-subs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.gr-subs,.gr-two{grid-template-columns:minmax(0,1fr)}}
+
+/* how it is graded */
+.gr-how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.gr-how>div{border-radius:var(--r);padding:28px 26px;background:#141111;display:grid;gap:12px;align-content:start}
+.gr-how .ico{width:34px;height:34px;color:var(--red);stroke:currentColor;fill:none;stroke-width:1.5}
+.gr-how h3{font-size:var(--t-card);color:#fff}
+.gr-how p{font-size:var(--t-body);color:var(--ink-text)}
+.gr-how .warn h3{color:#FF6A6E}
+.gr-more{margin-top:28px}
+@media (max-width:900px){.gr-how{grid-template-columns:minmax(0,1fr)}}
+</style>
+<link rel="stylesheet" href="./assets/motion.css">
+<script defer src="./assets/motion.js"></script>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="12" cy="14.2" r="3.4"/><path d="M12 12.3v2l1.4 1"/></symbol><symbol id="i-layers" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8.2" y="10.2" width="3.3" height="3.3" rx=".6"/><rect x="12.5" y="10.2" width="3.3" height="3.3" rx=".6"/><rect x="8.2" y="14.5" width="3.3" height="3.3" rx=".6"/><rect x="12.5" y="14.5" width="3.3" height="3.3" rx=".6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.5 11h7M8.5 14h7M8.5 17h4"/></symbol><symbol id="i-camera" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="12.2" width="8" height="5.6" rx="1"/><circle cx="12" cy="15" r="1.5"/><path d="M10.3 12.2l.8-1.4h1.8l.8 1.4"/></symbol><symbol id="i-video" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="7.8" y="11.6" width="6.2" height="5" rx="1"/><path d="M14 13.2l3-1.4v4.6l-3-1.4"/></symbol><symbol id="i-eyeoff" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.3 14.2s1.5-2.6 3.7-2.6 3.7 2.6 3.7 2.6-1.5 2.6-3.7 2.6-3.7-2.6-3.7-2.6z"/><path d="M8.5 18l7-7.6"/></symbol><symbol id="i-chip" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="9.4" y="11.6" width="5.2" height="5.2" rx="1"/><path d="M9.4 13.2H8M9.4 15.2H8M14.6 13.2H16M14.6 15.2H16M11 11.6v-1.4M13 11.6v-1.4M11 16.8v1.4M13 16.8v1.4"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 10l3.4 1.4v2.6c0 2-1.4 3.5-3.4 4.4-2-.9-3.4-2.4-3.4-4.4v-2.6L12 10z"/><path d="M10.5 14.2l1 1 2.1-2.1"/></symbol><symbol id="i-box" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8.3" y="10.4" width="7.4" height="8.2" rx="1"/><rect x="10" y="12.2" width="4" height="4.6" rx=".6"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="11.2" width="8" height="7" rx="1"/><path d="M8 13.7h8M10.2 9.8v2.4M13.8 9.8v2.4"/></symbol><symbol id="i-truck" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M7.8 12h5.4v4.4H7.8zM13.2 13.6h2l1.4 1.5v1.3h-3.4z"/><circle cx="9.7" cy="17.6" r=".9"/><circle cx="14.6" cy="17.6" r=".9"/></symbol><symbol id="i-gift" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="12.4" width="8" height="2.2"/><path d="M9 14.6v3.8h6v-3.8M12 12.4v6M12 12.4c-.8-.6-2.6-.7-2.6-1.8S11.2 9.9 12 12.4zM12 12.4c.8-.6 2.6-.7 2.6-1.8S12.8 9.9 12 12.4z"/></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.5 12.2h5.5l-1.6-1.6M15.5 16h-5.5l1.6 1.6"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol><symbol id="i-award" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 10.3l1.15 2.25 2.5.35-1.8 1.75.45 2.5L12 15.95l-2.3 1.2.45-2.5-1.8-1.75 2.5-.35z"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.3 16.2c.9-3 1.9-3 2.4 0s1.5 0 2-3 1.6-1.6 2.6 1.2M8.3 18.3h7.4"/></symbol><symbol id="i-size" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8 11.3V9.8h1.5M16 11.3V9.8h-1.5M8 16.9v1.5h1.5M16 16.9v1.5h-1.5"/><rect x="10.4" y="12" width="3.2" height="4.2" rx=".6"/></symbol><symbol id="i-target" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="12" cy="14.2" r="3.2"/><circle cx="12" cy="14.2" r=".9" fill="currentColor" stroke="none"/><path d="M12 9.8v1.6M12 17v1.6M7.6 14.2h1.6M14.8 14.2h1.6"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/><circle cx="12" cy="15.5" r="1.2"/></symbol><symbol id="i-card" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8.4" y="10.6" width="7.2" height="3" rx=".5" fill="currentColor" stroke="none"/><path d="M8.4 16h7.2M8.4 18.2h4"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="11.4" width="8" height="6" rx="1"/><path d="M8.3 12.2l3.7 2.6 3.7-2.6"/></symbol><symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="9" y="10" width="6" height="8.6" rx="1.2"/><path d="M11 17h2"/></symbol><symbol id="i-image" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="10.8" width="8" height="7.4" rx="1"/><circle cx="10.3" cy="13" r=".9"/><path d="M16 16.2l-2.4-2.4-4 4"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5z"/></symbol><symbol id="i-pause" viewBox="0 0 24 24"><path d="M8.5 5.5v13M15.5 5.5v13"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8 14.2s1.6-2.6 4-2.6 4 2.6 4 2.6-1.6 2.6-4 2.6-4-2.6-4-2.6z"/><circle cx="12" cy="14.2" r="1.3" fill="currentColor" stroke="none"/></symbol><symbol id="i-database" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><ellipse cx="12" cy="11.6" rx="3.5" ry="1.3"/><path d="M8.5 11.6v5c0 .7 1.6 1.3 3.5 1.3s3.5-.6 3.5-1.3v-5"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="10.2" cy="12.4" r="1.5"/><circle cx="14.4" cy="12.8" r="1.1"/><path d="M7.6 18.2a2.6 2.6 0 015.2 0M13 18.2a1.9 1.9 0 013.4 0"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M15.5 14.2a3.5 3.5 0 01-6.2 2.2M8.5 14.2a3.5 3.5 0 016.2-2.2M8.5 11.2v2.4h2.4M15.5 17.2v-2.4h-2.4"/></symbol><symbol id="i-dollar" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 9.8v8.6M14 12.3c0-.8-.9-1.4-2-1.4s-2 .6-2 1.4c0 1.9 4 .9 4 2.8 0 .9-.9 1.5-2 1.5s-2-.6-2-1.4"/></symbol><symbol id="i-map" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 18.4s3-2.8 3-5.4a3 3 0 10-6 0c0 2.6 3 5.4 3 5.4z"/><circle cx="12" cy="13" r="1"/></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z"/></symbol><symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></symbol><symbol id="i-drag" viewBox="0 0 24 24"><path d="M2 12h20M6 8l-4 4 4 4M18 8l4 4-4 4"/></symbol><symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 016 0V8"/></symbol><symbol id="i-apple" viewBox="0 0 24 24"><path d="M16.4 12.6c0-2.4 2-3.5 2-3.6-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.8-3.5.8-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2-1.1 2.8-2.3.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.5-.9-2.5-3.6zM14.2 5.6c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.7-1.3z" fill="currentColor" stroke="none"/></symbol><symbol id="i-slab" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="4" rx=".8" fill="currentColor" stroke="none"/><rect x="7.5" y="10.5" width="9" height="8.5" rx=".8"/></symbol><symbol id="i-loupe" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="11.2" cy="13.2" r="2.6"/><path d="M13.1 15.1l2.4 2.4"/></symbol><symbol id="i-ruler" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="12.8" width="8" height="3.2" rx=".5"/><path d="M10 12.8v1.3M12 12.8v2M14 12.8v1.3"/></symbol><symbol id="i-corner" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.5 18.2v-4.2a3 3 0 013-3h4"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 10l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z"/></symbol></svg>
+<a class="sr" href="#main">Skip to content</a>
+<div class="abar" data-cd>
+  <div class="wrap">
+    <i class="dot" aria-hidden="true"></i>
+    <b class="live" data-ps-label>Pre sale is live</b>
+    <span class="hide-s">Poly $29 &middot; Glass $200 a card</span>
+    <span>Offer ends in <b data-cd-text>113d 00h 00m</b></span>
+    <a href="shop.html#hero">Claim Your Slot</a>
+  </div>
+</div>
+<header class="hdr">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="HGA, Hybrid Grading Approach, home">
+      <img src="./assets/hybrid_grading/hga-2700a46b.svg" alt="HGA" width="91" height="22">
+      <span class="co">Hybrid Grading<br>Approach</span>
+    </a>
+    <nav class="hnav" id="hnav" aria-label="Site"><a href="shop.html">Presale</a><a href="how-it-works.html">How it works</a><div class="hdd cur" data-hdd><button type="button" class="hdd-btn" aria-expanded="false" aria-controls="hdd-grading">Grading<svg class="hdd-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="hdd-menu" id="hdd-grading"><a href="grading-standards.html"><b>Grading Standards</b><span>The published standard, in full</span></a><a href="grade-report.html" aria-current="page"><b>Grade Report</b><span>Every defect, located and rated</span></a></div></div><a href="legacy.html">Legacy HGA</a><a href="about.html">About</a><a href="faq.html">FAQ</a></nav>
+    <div class="acct">
+      <a class="cart-link" href="cart.html" aria-label="Cart"><svg class="ico"><use href="#i-bag"/></svg><span class="cart-n" data-cart-count hidden>0</span></a>
+      <a class="btn cta" href="shop.html#hero">Claim Your Slot</a>
+      <button class="menu-btn" type="button" data-menu aria-controls="hnav" aria-expanded="false" aria-label="Menu"><svg class="ico"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<section class="phero gr-hero" aria-labelledby="gr-title">
+  <img class="mark" src="./assets/hybrid_grading/hga-2700a46b.svg" alt="" aria-hidden="true">
+  <div class="wrap">
+    <div>
+      <p class="eb">The Grade Report</p>
+      <h1 class="h1" id="gr-title">Every defect,<br><span class="red">located and rated.</span></h1>
+      <p class="lede">Where it is, how severe, with the images to prove it. Public on the cert.</p>
+      <div class="gr-acts">
+        <a class="btn lg" href="report.html">Open a full report <svg class="ico"><use href="#i-arrow"/></svg></a>
+        <a class="btn ghost inv lg" href="#report">What you get</a>
+      </div>
+    </div>
+    <div class="gr-vis">
+      <img src="./slabs/ohtani/720.webp" alt="HGA Glass slab: Shohei Ohtani, 2025 Topps Finest Headliners Superfractor 1/1, graded 10" width="720" height="1207" fetchpriority="high">
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="report" aria-labelledby="gr-report-title">
+  <div class="wrap">
+    <div class="sec-head split rv">
+      <div><p class="eb">What you get</p><h2 class="h2" id="gr-report-title" style="margin-top:18px">A grade<br><span class="red">you can read.</span></h2></div>
+      <p class="lede">Every card gets a certified condition report: the card grade, all four subgrades, and every defect a grader found, where it is on the card and how severe. Open to anyone with the cert number.</p>
+    </div>
+
+    <article class="gr-rc rv" aria-label="Sample Grade Report">
+      <header class="gr-rc-h">
+        <div class="t">Grade Report<small>Certified condition report</small></div>
+        <span class="cert">Cert HGA-2026-0000412</span>
+        <span class="gr-ok"><i aria-hidden="true"></i>Verified &middot; chip matches record</span>
+        <span class="gr-tag">Sample report</span>
+      </header>
+      <div class="gr-rc-b">
+        <div class="gr-rc-g">
+          <div class="gr-big"><b>10</b><div><span>Card grade</span><strong>Gem Mint</strong></div></div>
+          <div class="gr-idn"><b>2025 Topps Finest &middot; Headliners &middot; #HL-1</b><span>Shohei Ohtani &middot; Superfractor &middot; 1/1 &middot; Los Angeles Dodgers</span></div>
+          <p class="gr-sum">A clean Superfractor. One trace print line in the foil, from the factory. Gem Mint 10.</p>
+          <dl class="gr-meta">
+            <div><dt>Housing</dt><dd>HGA Glass</dd></div>
+            <div><dt>Autograph</dt><dd>None on card</dd></div>
+            <div><dt>Graded</dt><dd>Sep 12, 2026</dd></div>
+            <div><dt>Standard</dt><dd>HGA Standard v2026.2</dd></div>
+          </dl>
+        </div>
+        <div class="gr-rc-s">
+          <h3>Subgrades &middot; on the back of the label</h3>
+          <ul class="gr-sg">
+            <li><span class="v">10</span><span class="k">Centering</span><span class="d">Front 51/49 &middot; 50/50</span></li>
+            <li><span class="v">10</span><span class="k">Corners</span><span class="d">No findings, 4 of 4</span></li>
+            <li><span class="v">10</span><span class="k">Edges</span><span class="d">No findings, 4 of 4</span></li>
+            <li><span class="v lo">9.5</span><span class="k">Surface</span><span class="d">1 finding &middot; trace</span></li>
+            <li><span class="v na" aria-label="Not applicable">&mdash;</span><span class="k">Autograph</span><span class="d">Not applicable</span></li>
+          </ul>
+          <p class="gr-eye"><b>Eye appeal &middot; Favorable.</b> One look at arm's length, made last. It never lowers a grade.</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="sec ink" id="findings" aria-labelledby="gr-find-title">
+  <div class="wrap gr-find">
+    <figure class="gr-scan rv">
+      <img src="./slabs/ohtani/card/front.webp" alt="Front scan of the sample card, with finding 1 marked at the upper right" width="633" height="886" loading="lazy">
+      <span class="gr-pin" aria-hidden="true">1</span>
+    </figure>
+
+    <div class="rv">
+      <p class="eb">What we found, in order</p>
+      <h2 class="h2" id="gr-find-title">Located. Rated.<br><span class="red">Imaged.</span></h2>
+      <p class="lede">Every finding is numbered on the scan, described in plain language, and given a severity. Not a line on a label. A location on the card.</p>
+
+      <article class="gr-fd" id="gr-f1">
+        <span class="n" aria-hidden="true">1</span>
+        <div>
+          <b>Print line</b>
+          <p>A single short line in the foil, from the factory. Visible only under raking light.</p>
+          <dl>
+            <div><dt>Where</dt><dd>Front, upper right background</dd></div>
+            <div><dt>Severity</dt><dd>Trace</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <div class="gr-sev">
+        <h3 id="gr-sev-t">The severity scale</h3>
+        <ol aria-labelledby="gr-sev-t">
+          <li class="on"><b>Trace</b><span>Only under magnification or raking light</span></li>
+          <li><b>Minor</b><span>Close inspection</span></li>
+          <li><b>Moderate</b><span>Arm's length</span></li>
+          <li><b>Severe</b><span></span></li>
+          <li><b>Damaged</b><span></span></li>
+        </ol>
+      </div>
+      <p class="gr-fine">Severity, when a finding is present. Sample report shown; values are illustrative. The full standard is published at <a href="grading-standards.html">hybridgrading.com/standards</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec white" id="subgrades" aria-labelledby="gr-sub-title">
+  <div class="wrap">
+    <div class="sec-head split rv">
+      <div><p class="eb">The subgrades, explained</p><h2 class="h2" id="gr-sub-title" style="margin-top:18px">Four subgrades.<br><span class="red">Each one on the label.</span></h2></div>
+      <p class="lede">Each subgrade is scored on its own and explained in the report. Shown here for the sample card.</p>
+    </div>
+    <div class="gr-subs rv">
+      <div>
+        <span class="v">10</span>
+        <h3>Centering</h3>
+        <p>Measured from the scan, not judged by eye.</p>
+        <dl class="gr-cent">
+          <dt>Front &middot; left / right</dt><dd>51 / 49</dd>
+          <dt>Front &middot; top / bottom</dt><dd>50 / 50</dd>
+          <dt>Back &middot; left / right</dt><dd>53 / 47</dd>
+          <dt>Back &middot; top / bottom</dt><dd>52 / 48</dd>
+        </dl>
+      </div>
+      <div><span class="v">10</span><h3>Corners</h3><p>All four corners sharp, front and back. No wear, fraying or dings.</p></div>
+      <div><span class="v">10</span><h3>Edges</h3><p>All four edges clean, front and back. No chipping, roughness or nicks.</p></div>
+      <div><span class="v lo">9.5</span><h3>Surface</h3><p>One finding. Otherwise clean on both faces: no scratches, dents, creases or loss of gloss.</p></div>
+    </div>
+    <div class="gr-two rv">
+      <div><h3>Autograph</h3><p>No autograph on this card. When there is one, it is graded free. Only a 10 goes on the label and into this report.</p></div>
+      <div><h3>HGA Flawless &middot; not met</h3><p>Flawless needs a 10 on every subgrade. Surface 9.5 on this card. The card grade stands at Gem Mint 10.</p></div>
+    </div>
+    <p class="gr-subnote gr-tag">Sample report &middot; illustrative values</p>
+  </div>
+</section>
+
+<section class="sec ink" id="blind" aria-labelledby="gr-blind-title">
+  <div class="wrap">
+    <div class="sec-head split rv">
+      <div><p class="eb">How it is graded</p><h2 class="h2" id="gr-blind-title" style="margin-top:18px">Graded blind.<br><span class="red">To a published standard.</span></h2></div>
+      <p class="lede">The same standard for every card, published in full.</p>
+    </div>
+    <div class="gr-how rv">
+      <div>
+        <svg class="ico" aria-hidden="true"><use href="#i-eyeoff"/></svg>
+        <h3>Graded blind</h3>
+        <p>Centering set by the published scale. Graded by a grader who never knows whose card it is, then audited for consistency.</p>
+      </div>
+      <div>
+        <svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>
+        <h3>Authenticated first</h3>
+        <p>Every card is authenticated before it is graded. A card that cannot be authenticated is returned ungraded, fee refunded.</p>
+      </div>
+      <div class="warn">
+        <svg class="ico" aria-hidden="true"><use href="#i-chip"/></svg>
+        <h3>Verify before you buy</h3>
+        <p>A matching cert number does not by itself prove a slab. Tap the NFT chip in the label to open the record, compare the card in front of you with the images, and buy from sellers you trust.</p>
+      </div>
+    </div>
+    <div class="gr-more"><a class="tlink" href="grading-standards.html#blind">How blind grading works <svg class="ico"><use href="#i-arrow"/></svg></a></div>
+  </div>
+</section>
+
+<section class="endcta" data-sbar-stop aria-labelledby="gr-end-title">
+  <div class="wrap">
+    <div>
+      <p class="eb" style="color:rgba(255,255,255,.6)">Every card gets this</p>
+      <h2 class="h2" id="gr-end-title">Every grade<br><span class="red">explained.</span></h2>
+      <p class="lede">All subgrades, full Grade Report, autograph graded free. Public on the cert.</p>
+      <div class="acts"><a class="btn lg" href="shop.html#hero">Claim Your Slot <svg class="ico"><use href="#i-arrow"/></svg></a><a class="btn ghost inv lg" href="grading-standards.html">Read the grading standards</a></div>
+    </div>
+    <div class="fan" aria-hidden="true">
+      <img src="./slabs/judge/720.webp" alt="" width="720" height="1198" loading="lazy">
+      <img src="./slabs/ohtani/720.webp" alt="" width="720" height="1207" loading="lazy">
+      <img src="./slabs/gengar/720.webp" alt="" width="720" height="1207" loading="lazy">
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="foot" data-sbar-stop>
+  <div class="wrap">
+    <div class="top">
+      <div class="lockup">
+        <img src="./assets/hybrid_grading/hga-hybrid-grading-approach-104fc1af.svg" alt="HGA, Hybrid Grading Approach" width="180" height="55">
+        <p>Graded blind to a published standard. Every grade explained. Every card housed. All sports. All TCG.</p>
+        <div class="marks">
+          <img src="./assets/hybrid_grading/hga-poly-69885480.svg" alt="HGA Poly" width="72" height="13">
+          <img src="./assets/hybrid_grading/hga-glass-828ebfd2.svg" alt="HGA Glass" width="80" height="13">
+        </div>
+      </div>
+      <div>
+        <h4>Presale</h4>
+        <ul>
+          <li><a href="shop.html#hero">Claim your slot</a></li>
+          <li><a href="pass.html">Grading slot</a></li>
+          <li><a href="cart.html">Cart</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Grading</h4>
+        <ul>
+          <li><a href="how-it-works.html">How it works</a></li>
+          <li><a href="grading-standards.html">Grading standards</a></li>
+          <li><a href="grade-report.html">The Grade Report</a></li>
+          <li><a href="report.html">Sample Grade Report</a></li>
+          <li><a href="the-reveal.html">The Reveal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About HGA</a></li>
+          <li><a href="legacy.html">Legacy HGA</a></li>
+          <li><a href="legacy.html#lookup">Cert lookup</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="knowledge-base.html">Knowledge base</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>&copy; 2026 HGA &middot; Hybrid Grading Approach &middot; A uCollect company &middot; Chandler, Arizona</span>
+      <span><a href="#">Presale terms</a> &middot; <a href="#">Terms</a> &middot; <a href="#">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>How it works | Live, from delivery to grade</title>
+<meta name="description" content="Fourteen steps, five departments, five moments on camera, then the Reveal. How HGA grades your card and what you see at each step.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0E0E0E">
+<link rel="preload" href="./assets/fonts/bc-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./assets/hga.css?v=80e4d4a7">
+<link rel="stylesheet" href="./assets/v2.css?v=80e4d4a7">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="./assets/v2.js?v=80e4d4a7"></script>
+<script defer src="./assets/site.js?v=80e4d4a7"></script>
+<script defer src="./assets/shop.js?v=80e4d4a7"></script>
+<style>
+/* how-it-works.html only. All classes prefixed hw-. Type sizes use the --t-* scale in v2.css */
+.hw-hero .hw-hero-in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(32px,5vw,72px);align-items:center;padding-block:clamp(56px,7vw,96px)}
+.hw-hero .h1{max-width:9.5em}
+.hw-hero .lede{margin-top:22px;color:var(--ink-text)}
+.hw-acts{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px}
+.hw-fine{margin:18px 0 0;font-size:var(--t-meta);color:rgba(255,255,255,.55)}
+.hw-cap{margin:14px 0 0;font-size:var(--t-meta);color:var(--muted)}
+
+/* portal step preview (mock UI) */
+.hw-pv{margin:0;background:#151212;border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:24px;box-shadow:0 40px 90px rgba(0,0,0,.55);color:#F6F4F0;max-width:480px;justify-self:end;width:100%}
+.hw-pv-top{display:flex;align-items:center;gap:12px;font-size:var(--t-meta);color:rgba(255,255,255,.6)}
+.hw-pv-top img{height:14px;width:auto}
+.hw-pv-card{display:flex;gap:16px;align-items:center;padding:20px 0 16px}
+.hw-pv-card img{width:56px;height:auto;border-radius:6px;flex:none;box-shadow:0 8px 20px rgba(0,0,0,.5)}
+.hw-pv-card small{display:block;font-size:var(--t-meta);color:rgba(255,255,255,.55);line-height:1.3}
+.hw-pv-card b{display:block;font-size:var(--t-card);line-height:1.2;margin:2px 0}
+.hw-pv-card span{font-size:var(--t-meta);color:rgba(255,255,255,.72)}
+.hw-pv-status{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:var(--t-meta);font-weight:600;color:rgba(255,255,255,.75)}
+.hw-pv-status span:first-child{display:inline-flex;align-items:center;gap:7px}
+.hw-pv-status i{width:7px;height:7px;border-radius:50%;background:#3BC17A}
+.hw-pv-bar{list-style:none;margin:10px 0 8px;padding:0;display:grid;grid-template-columns:repeat(14,1fr);gap:3px}
+.hw-pv-bar li{height:4px;border-radius:3px;background:rgba(255,255,255,.12)}
+.hw-pv-bar li.d{background:rgba(230,36,41,.65)}
+.hw-pv-bar li.c{background:var(--red)}
+.hw-pv-depts{list-style:none;margin:0;padding:0;display:grid}
+.hw-pv-depts>li{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 10px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:var(--t-body)}
+.hw-pv-depts>li:last-child{border-bottom:0}
+.hw-pv-depts>li>b{font-weight:600}
+.hw-pv-depts>li>span{font-size:var(--t-eb);color:rgba(255,255,255,.5)}
+.hw-pv-depts>li.d>span{color:#7FD3A3}
+.hw-pv-depts>li.c>span{color:#FF6A6E;font-weight:600}
+.hw-pv-depts ol{list-style:none;margin:8px 0 2px;padding:0;width:100%;display:grid;gap:8px}
+.hw-pv-depts ol li{display:flex;gap:10px;align-items:center;font-size:var(--t-meta);color:rgba(255,255,255,.5)}
+.hw-pv-depts ol p{margin:0;line-height:1.3}
+.hw-pv-depts ol li.d,.hw-pv-depts ol li.c{color:#fff}
+.hw-pv-depts ol .ico{width:16px;height:16px;flex:none;color:#7FD3A3;stroke:currentColor;fill:none;stroke-width:2.4}
+.hw-pv-depts ol i{width:10px;height:10px;margin:0 3px;border-radius:50%;border:1.5px solid rgba(255,255,255,.35);flex:none}
+.hw-pv-depts ol li.c i{border-color:var(--red);background:var(--red)}
+.hw-pv .hw-cap{color:rgba(255,255,255,.45)}
+
+/* step rail: one row per department, steps as plain text columns */
+.hw-rail{display:grid;border-top:1px solid var(--line)}
+.hw-dept{display:grid;grid-template-columns:240px minmax(0,1fr);gap:20px 40px;padding:36px 0;border-bottom:1px solid var(--line)}
+.hw-dh{display:grid;align-content:start;gap:6px}
+.hw-dn{font-size:var(--t-eb);font-weight:700;letter-spacing:.1em;color:var(--red)}
+.hw-dh h3{font-size:var(--t-card);line-height:1.2}
+.hw-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 32px}
+.hw-steps li{display:flex;flex-direction:column;gap:6px}
+.hw-steps h4{margin:0;font-size:var(--t-card);line-height:1.25}
+.hw-steps p{margin:0;font-size:var(--t-body);line-height:1.55;color:var(--text-2)}
+.hw-n{font-weight:700;font-size:var(--t-meta);letter-spacing:.06em;color:var(--muted);font-variant-numeric:tabular-nums}
+.hw-n::before{content:"Step "}
+.hw-you .hw-n{color:var(--red)}
+.hw-legend{display:flex;align-items:center;gap:10px;margin:24px 0 0;font-size:var(--t-meta);color:var(--text-2)}
+.hw-legend .ico{width:18px;height:18px;color:var(--red);flex:none}
+
+/* five moments */
+.hw-mo{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px}
+.hw-mo li{display:flex;flex-direction:column;gap:8px}
+.hw-mo figure{margin:0 0 8px;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;background:#111}
+.hw-mo figure img{width:100%;height:100%;object-fit:cover;display:block}
+.hw-mo .hw-mo-slab{background:radial-gradient(ellipse at 50% 30%,#2a2222,#0d0b0b 70%)}
+.hw-mo .hw-mo-slab img{object-fit:contain;padding:14px 0 6px}
+.hw-mo-n{font-size:var(--t-eb);font-weight:700;letter-spacing:.1em;color:var(--red)}
+.hw-mo h3{font-size:var(--t-card);line-height:1.2;color:#fff}
+.hw-mo p{margin:0;font-size:var(--t-body);line-height:1.5;color:rgba(255,255,255,.7)}
+
+/* portal mock */
+.hw-app{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow)}
+.hw-app-bar{display:flex;align-items:center;gap:7px;padding:12px 16px;background:var(--surface-2)}
+.hw-app-bar i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.16)}
+.hw-app-bar span{margin-left:12px;font-size:var(--t-eb);color:var(--muted);background:rgba(255,255,255,.05);border-radius:999px;padding:3px 14px;flex:0 1 320px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hw-app-nav{display:flex;align-items:center;gap:6px 22px;flex-wrap:wrap;padding:14px 22px;border-bottom:1px solid var(--line);font-size:var(--t-meta);color:var(--muted)}
+.hw-app-nav img{height:14px;width:auto;margin-right:12px}
+.hw-app-nav .on{color:var(--text);font-weight:600}
+.hw-tbl{padding:6px 22px 8px}
+.hw-tr{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1.2fr) minmax(0,1.3fr) 96px;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:var(--t-body)}
+.hw-tr:last-child{border-bottom:0}
+.hw-tr small{display:block;font-size:var(--t-meta);color:var(--muted);line-height:1.35}
+.hw-th{font-size:var(--t-eb);font-weight:600;color:var(--muted);padding:10px 0}
+.hw-c{display:flex;gap:14px;align-items:center;min-width:0}
+.hw-c img{width:40px;height:auto;border-radius:4px;flex:none}
+.hw-c p{margin:0;min-width:0}
+.hw-c b{display:block;line-height:1.3}
+.hw-dep{display:block}
+.hw-pill{display:inline-block;font-size:var(--t-eb);font-weight:700;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line-2);border-radius:999px;padding:6px 14px;color:var(--text)}
+.hw-pill.red{background:var(--red);border-color:var(--red);color:#fff}
+.hw-app .hw-cap{padding:12px 22px 16px;margin:0;border-top:1px solid var(--line)}
+.hw-three{list-style:none;margin:clamp(36px,4vw,56px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 40px}
+.hw-three li{display:grid;gap:8px;align-content:start}
+.hw-three h3{font-size:var(--t-card)}
+.hw-three p{margin:0;font-size:var(--t-body);color:var(--text-2)}
+
+/* live */
+.hw-live{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px clamp(32px,5vw,72px)}
+.hw-lc{display:flex;flex-direction:column;gap:12px}
+.hw-lc h3{font-size:var(--t-card)}
+.hw-lc>p{margin:0;font-size:var(--t-body);color:var(--text-2);flex:1}
+.hw-note{margin-top:10px;border-radius:var(--r);padding:18px 20px;background:var(--surface);display:grid;gap:4px}
+.hw-note b{font-size:var(--t-body)}
+.hw-note p{margin:0;font-size:var(--t-body);color:var(--text-2)}
+
+/* NFT */
+.hw-nft{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,88px);align-items:center}
+.hw-nft-vis{position:relative}
+.hw-label{position:relative;border-radius:12px;box-shadow:0 30px 70px rgba(0,0,0,.7);z-index:2;width:80%;margin-top:-16%}
+.hw-label img{display:block;width:100%;height:auto;border-radius:12px}
+.hw-tap{position:absolute;top:-14px;right:-14px;z-index:2;display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink);font-size:var(--t-eb);font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:7px 14px 7px 10px;box-shadow:0 10px 24px rgba(0,0,0,.45)}
+.hw-tap i{position:relative;width:10px;height:10px;border-radius:50%;background:var(--red)}
+.hw-nft-photo{display:block;width:84%;margin:0 0 0 auto;border-radius:var(--r);opacity:.8}
+.hw-nft-vis .hw-cap{margin-top:16px;color:rgba(255,255,255,.5)}
+.hw-nft-copy .h2{margin-top:14px}
+.hw-nft-list{list-style:none;margin:32px 0 0;padding:0;display:grid}
+.hw-nft-list li{padding:18px 0;border-top:1px solid rgba(255,255,255,.1)}
+.hw-nft-list h3{font-size:var(--t-card);color:#fff}
+.hw-nft-list p{margin:6px 0 0;font-size:var(--t-body);color:rgba(255,255,255,.7)}
+.hw-nft-list .hw-warn h3{color:#FF6A6E}
+
+/* reveal */
+.hw-rv{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(32px,6vw,88px);align-items:center}
+.hw-rv .h2{margin-top:14px}
+.hw-rv .lede{margin-top:18px}
+.hw-dec{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 28px}
+.hw-dec li{display:grid;gap:4px;align-content:start}
+.hw-dec b{font-size:var(--t-card)}
+.hw-dec span{font-size:var(--t-body);color:var(--text-2);line-height:1.45}
+.hw-rule{margin:24px 0 28px;font-weight:600;font-size:var(--t-body)}
+.hw-rv-vis{position:relative;display:block;aspect-ratio:1/1.05;max-width:460px;width:100%;justify-self:center;border-radius:var(--r-lg);background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(230,36,41,.22),transparent 70%)}
+.hw-rv-vis img{position:absolute;top:4%;width:46%;height:auto;filter:drop-shadow(0 30px 40px rgba(0,0,0,.6));transition:transform .5s ease}
+.hw-rv-vis .s1{left:8%;transform:rotate(-7deg)}
+.hw-rv-vis .s2{right:8%;transform:rotate(6deg) translateY(6%)}
+.hw-rv-vis:hover .s1{transform:rotate(-10deg) translateX(-4%)}
+.hw-rv-vis:hover .s2{transform:rotate(3deg) translateY(2%)}
+
+@media (max-width:1100px){
+  .hw-mo{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .hw-dept{grid-template-columns:1fr}
+}
+@media (max-width:900px){
+  .hw-hero .hw-hero-in,.hw-nft,.hw-rv{grid-template-columns:1fr}
+  .hw-pv{justify-self:start}
+  .hw-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hw-tr{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) 84px}
+  .hw-tr>:nth-child(3){display:none}
+  .hw-three,.hw-live{grid-template-columns:1fr}
+  .hw-rv-vis{max-width:380px}
+}
+@media (max-width:640px){
+  .hw-dept{padding:28px 0}
+  .hw-steps{grid-template-columns:1fr;gap:20px}
+  .hw-mo{grid-template-columns:1fr;gap:16px}
+  .hw-mo li{display:grid;grid-template-columns:104px minmax(0,1fr);grid-template-rows:auto auto 1fr;column-gap:16px;row-gap:4px;align-items:start}
+  .hw-mo figure{grid-row:1 / 4;margin:0;aspect-ratio:4/5}
+  .hw-tr{grid-template-columns:minmax(0,1fr) 76px;gap:10px}
+  .hw-tr>:nth-child(2){display:none}
+  .hw-th>:nth-child(2){display:none}
+  .hw-tbl{padding-inline:16px}
+  .hw-app-nav{padding:12px 16px;gap:6px 14px}
+  .hw-app-nav img{display:none}
+  .hw-app-nav span:nth-child(n+5){display:none}
+  .hw-app-bar span{display:none}
+  .hw-pill{padding:5px 10px}
+  .hw-dec{grid-template-columns:1fr;gap:16px}
+  .hw-pv{padding:18px}
+  .hw-label{width:90%}
+  .hw-tap{right:-4px}
+  .hw-acts .btn{flex:1 1 100%}
+}
+</style>
+<link rel="stylesheet" href="./assets/motion.css">
+<script defer src="./assets/motion.js"></script>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="12" cy="14.2" r="3.4"/><path d="M12 12.3v2l1.4 1"/></symbol><symbol id="i-layers" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8.2" y="10.2" width="3.3" height="3.3" rx=".6"/><rect x="12.5" y="10.2" width="3.3" height="3.3" rx=".6"/><rect x="8.2" y="14.5" width="3.3" height="3.3" rx=".6"/><rect x="12.5" y="14.5" width="3.3" height="3.3" rx=".6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.5 11h7M8.5 14h7M8.5 17h4"/></symbol><symbol id="i-camera" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="12.2" width="8" height="5.6" rx="1"/><circle cx="12" cy="15" r="1.5"/><path d="M10.3 12.2l.8-1.4h1.8l.8 1.4"/></symbol><symbol id="i-video" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="7.8" y="11.6" width="6.2" height="5" rx="1"/><path d="M14 13.2l3-1.4v4.6l-3-1.4"/></symbol><symbol id="i-eyeoff" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.3 14.2s1.5-2.6 3.7-2.6 3.7 2.6 3.7 2.6-1.5 2.6-3.7 2.6-3.7-2.6-3.7-2.6z"/><path d="M8.5 18l7-7.6"/></symbol><symbol id="i-chip" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="9.4" y="11.6" width="5.2" height="5.2" rx="1"/><path d="M9.4 13.2H8M9.4 15.2H8M14.6 13.2H16M14.6 15.2H16M11 11.6v-1.4M13 11.6v-1.4M11 16.8v1.4M13 16.8v1.4"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 10l3.4 1.4v2.6c0 2-1.4 3.5-3.4 4.4-2-.9-3.4-2.4-3.4-4.4v-2.6L12 10z"/><path d="M10.5 14.2l1 1 2.1-2.1"/></symbol><symbol id="i-box" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8.3" y="10.4" width="7.4" height="8.2" rx="1"/><rect x="10" y="12.2" width="4" height="4.6" rx=".6"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="11.2" width="8" height="7" rx="1"/><path d="M8 13.7h8M10.2 9.8v2.4M13.8 9.8v2.4"/></symbol><symbol id="i-truck" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M7.8 12h5.4v4.4H7.8zM13.2 13.6h2l1.4 1.5v1.3h-3.4z"/><circle cx="9.7" cy="17.6" r=".9"/><circle cx="14.6" cy="17.6" r=".9"/></symbol><symbol id="i-gift" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="12.4" width="8" height="2.2"/><path d="M9 14.6v3.8h6v-3.8M12 12.4v6M12 12.4c-.8-.6-2.6-.7-2.6-1.8S11.2 9.9 12 12.4zM12 12.4c.8-.6 2.6-.7 2.6-1.8S12.8 9.9 12 12.4z"/></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.5 12.2h5.5l-1.6-1.6M15.5 16h-5.5l1.6 1.6"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol><symbol id="i-award" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 10.3l1.15 2.25 2.5.35-1.8 1.75.45 2.5L12 15.95l-2.3 1.2.45-2.5-1.8-1.75 2.5-.35z"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.3 16.2c.9-3 1.9-3 2.4 0s1.5 0 2-3 1.6-1.6 2.6 1.2M8.3 18.3h7.4"/></symbol><symbol id="i-size" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8 11.3V9.8h1.5M16 11.3V9.8h-1.5M8 16.9v1.5h1.5M16 16.9v1.5h-1.5"/><rect x="10.4" y="12" width="3.2" height="4.2" rx=".6"/></symbol><symbol id="i-target" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="12" cy="14.2" r="3.2"/><circle cx="12" cy="14.2" r=".9" fill="currentColor" stroke="none"/><path d="M12 9.8v1.6M12 17v1.6M7.6 14.2h1.6M14.8 14.2h1.6"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/><circle cx="12" cy="15.5" r="1.2"/></symbol><symbol id="i-card" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8.4" y="10.6" width="7.2" height="3" rx=".5" fill="currentColor" stroke="none"/><path d="M8.4 16h7.2M8.4 18.2h4"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="11.4" width="8" height="6" rx="1"/><path d="M8.3 12.2l3.7 2.6 3.7-2.6"/></symbol><symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="9" y="10" width="6" height="8.6" rx="1.2"/><path d="M11 17h2"/></symbol><symbol id="i-image" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="10.8" width="8" height="7.4" rx="1"/><circle cx="10.3" cy="13" r=".9"/><path d="M16 16.2l-2.4-2.4-4 4"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10-6.5z"/></symbol><symbol id="i-pause" viewBox="0 0 24 24"><path d="M8.5 5.5v13M15.5 5.5v13"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8 14.2s1.6-2.6 4-2.6 4 2.6 4 2.6-1.6 2.6-4 2.6-4-2.6-4-2.6z"/><circle cx="12" cy="14.2" r="1.3" fill="currentColor" stroke="none"/></symbol><symbol id="i-database" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><ellipse cx="12" cy="11.6" rx="3.5" ry="1.3"/><path d="M8.5 11.6v5c0 .7 1.6 1.3 3.5 1.3s3.5-.6 3.5-1.3v-5"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="10.2" cy="12.4" r="1.5"/><circle cx="14.4" cy="12.8" r="1.1"/><path d="M7.6 18.2a2.6 2.6 0 015.2 0M13 18.2a1.9 1.9 0 013.4 0"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M15.5 14.2a3.5 3.5 0 01-6.2 2.2M8.5 14.2a3.5 3.5 0 016.2-2.2M8.5 11.2v2.4h2.4M15.5 17.2v-2.4h-2.4"/></symbol><symbol id="i-dollar" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 9.8v8.6M14 12.3c0-.8-.9-1.4-2-1.4s-2 .6-2 1.4c0 1.9 4 .9 4 2.8 0 .9-.9 1.5-2 1.5s-2-.6-2-1.4"/></symbol><symbol id="i-map" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 18.4s3-2.8 3-5.4a3 3 0 10-6 0c0 2.6 3 5.4 3 5.4z"/><circle cx="12" cy="13" r="1"/></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z"/></symbol><symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></symbol><symbol id="i-drag" viewBox="0 0 24 24"><path d="M2 12h20M6 8l-4 4 4 4M18 8l4 4-4 4"/></symbol><symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 016 0V8"/></symbol><symbol id="i-apple" viewBox="0 0 24 24"><path d="M16.4 12.6c0-2.4 2-3.5 2-3.6-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.8-3.5.8-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2-1.1 2.8-2.3.9-1.3 1.2-2.5 1.3-2.6-.1 0-2.5-.9-2.5-3.6zM14.2 5.6c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.7-1.3z" fill="currentColor" stroke="none"/></symbol><symbol id="i-slab" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="4" rx=".8" fill="currentColor" stroke="none"/><rect x="7.5" y="10.5" width="9" height="8.5" rx=".8"/></symbol><symbol id="i-loupe" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><circle cx="11.2" cy="13.2" r="2.6"/><path d="M13.1 15.1l2.4 2.4"/></symbol><symbol id="i-ruler" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><rect x="8" y="12.8" width="8" height="3.2" rx=".5"/><path d="M10 12.8v1.3M12 12.8v2M14 12.8v1.3"/></symbol><symbol id="i-corner" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M8.5 18.2v-4.2a3 3 0 013-3h4"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><rect x="7.5" y="5" width="9" height="2.6" rx=".6" fill="currentColor" stroke="none"/><path d="M12 10l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z"/></symbol></svg>
+<a class="sr" href="#main">Skip to content</a>
+<div class="abar" data-cd>
+  <div class="wrap">
+    <i class="dot" aria-hidden="true"></i>
+    <b class="live" data-ps-label>Pre sale is live</b>
+    <span class="hide-s">Poly $29 &middot; Glass $200 a card</span>
+    <span>Offer ends in <b data-cd-text>113d 00h 00m</b></span>
+    <a href="shop.html#hero">Claim Your Slot</a>
+  </div>
+</div>
+<header class="hdr">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="HGA, Hybrid Grading Approach, home">
+      <img src="./assets/hybrid_grading/hga-2700a46b.svg" alt="HGA" width="91" height="22">
+      <span class="co">Hybrid Grading<br>Approach</span>
+    </a>
+    <nav class="hnav" id="hnav" aria-label="Site"><a href="shop.html">Presale</a><a href="how-it-works.html" aria-current="page">How it works</a><div class="hdd" data-hdd><button type="button" class="hdd-btn" aria-expanded="false" aria-controls="hdd-grading">Grading<svg class="hdd-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="hdd-menu" id="hdd-grading"><a href="grading-standards.html"><b>Grading Standards</b><span>The published standard, in full</span></a><a href="grade-report.html"><b>Grade Report</b><span>Every defect, located and rated</span></a></div></div><a href="legacy.html">Legacy HGA</a><a href="about.html">About</a><a href="faq.html">FAQ</a></nav>
+    <div class="acct">
+      <a class="cart-link" href="cart.html" aria-label="Cart"><svg class="ico"><use href="#i-bag"/></svg><span class="cart-n" data-cart-count hidden>0</span></a>
+      <a class="btn cta" href="shop.html#hero">Claim Your Slot</a>
+      <button class="menu-btn" type="button" data-menu aria-controls="hnav" aria-expanded="false" aria-label="Menu"><svg class="ico"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<section class="phero hw-hero" aria-labelledby="hw-title">
+  <div class="wrap hw-hero-in">
+    <div class="hw-hero-copy">
+      <p class="eb">How it works &middot; Your portal</p>
+      <h1 class="h1" id="hw-title">Live, from delivery <span class="red">to grade.</span></h1>
+      <p class="lede">Your box on arrival, the unboxing on video, every card imaged, the finished slab, then the Reveal. Fourteen steps, every one written to your card's record the moment it finishes.</p>
+      <div class="hw-acts">
+        <a class="btn lg" href="shop.html#hero">Claim Your Slot <svg class="ico"><use href="#i-arrow"/></svg></a>
+        <a class="btn ghost inv lg" href="#steps">See every step</a>
+      </div>
+      <p class="hw-fine">Grading begins Feb 1, 2027. Your portal comes with the HGA app in 2027.</p>
+    </div>
+
+    <figure class="hw-pv" aria-label="Preview: one card in the HGA portal, at step 6 of 13, Graded blind">
+      <div class="hw-pv-top">
+        <img src="./assets/hybrid_grading/hga-2700a46b.svg" alt="" width="58" height="14">
+        <span>My cards &middot; 1 of 3</span>
+      </div>
+      <div class="hw-pv-card">
+        <img src="./assets/pack/how/portal-ohtani.webp" alt="Shohei Ohtani Superfractor card" width="480" height="787">
+        <div>
+          <small>2025 Topps Finest &middot; Headliners #HL-1</small>
+          <b>Shohei Ohtani</b>
+          <span>Superfractor 1/1 &middot; HGA Glass</span>
+        </div>
+      </div>
+      <div class="hw-pv-status"><span><i aria-hidden="true"></i>Delivered</span><span>Step 6 of 13 &middot; Grading</span></div>
+      <ol class="hw-pv-bar" aria-hidden="true"><li class="d"></li><li class="d"></li><li class="d"></li><li class="d"></li><li class="d"></li><li class="d"></li><li class="c"></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      <ul class="hw-pv-depts">
+        <li class="d"><b>Intake &amp; Imaging</b><span>Done &middot; 3 of 3</span></li>
+        <li class="d"><b>ID &amp; Authentication</b><span>Done &middot; 2 of 2</span></li>
+        <li class="c"><b>Grading</b><span>In progress</span>
+          <ol>
+            <li class="d"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><p>Centering measured</p></li>
+            <li class="c"><i aria-hidden="true"></i><p>Graded blind</p></li>
+            <li><i aria-hidden="true"></i><p>Audited &amp; released</p></li>
+          </ol>
+        </li>
+        <li><b>Encapsulation</b><span>Next</span></li>
+        <li><b>Fulfillment</b><span>Then the Reveal</span></li>
+      </ul>
+      <figcaption class="hw-cap">Preview of the HGA app, coming in 2027. Sample card.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec white" id="steps" aria-labelledby="hw-steps-title">
+  <div class="wrap">
+    <div class="sec-head split rv">
+      <div><p class="eb">Our process</p><h2 class="h2" id="hw-steps-title">Five departments. Fourteen steps. <span class="red">Nothing skips ahead.</span></h2></div>
+      <p class="lede">Each step writes one event to your card's record, and your portal reads that record. You see what happened, when, and the photo, video or images that go with it.</p>
+    </div>
+
+    <div class="hw-rail">
+      <div class="hw-dept rv">
+        <div class="hw-dh"><span class="hw-dn">01</span><h3>Intake &amp; Imaging</h3></div>
+        <ol class="hw-steps">
+          <li class="hw-you"><span class="hw-n">0</span><h4>Order placed</h4><p>List each card and pick its housing. Pay, then ship. Your tracking link sits in the portal.</p></li>
+          <li><span class="hw-n">1</span><h4>Received &amp; unboxed</h4><p>Your box is scanned and photographed on arrival. Opened on camera against your list, every card barcoded.</p></li>
+          <li><span class="hw-n">2</span><h4>Imaged</h4><p>High resolution scans of the front and back. Every later step uses these images.</p></li>
+        </ol>
+      </div>
+      <div class="hw-dept rv">
+        <div class="hw-dh"><span class="hw-dn">02</span><h3>ID &amp; Authentication</h3></div>
+        <ol class="hw-steps">
+          <li><span class="hw-n">3</span><h4>Identified</h4><p>Matched to the database and confirmed by a person.</p></li>
+          <li><span class="hw-n">4</span><h4>Authenticated</h4><p>Measured, UV, magnified, signature checked. It must clear every test. The case size that fits is selected.</p></li>
+        </ol>
+      </div>
+      <div class="hw-dept rv">
+        <div class="hw-dh"><span class="hw-dn">03</span><h3>Grading</h3></div>
+        <ol class="hw-steps">
+          <li><span class="hw-n">5</span><h4>Centering measured</h4><p>Borders measured on both sides. The published scale sets the centering grade.</p></li>
+          <li><span class="hw-n">6</span><h4>Graded blind</h4><p>Every defect marked on the images by a grader who never knows whose card it is.</p></li>
+          <li><span class="hw-n">7</span><h4>Audited &amp; released</h4><p>A senior grader inspects blind and releases the grade. Cert assigned. Grade hidden until the Reveal.</p></li>
+        </ol>
+      </div>
+      <div class="hw-dept rv">
+        <div class="hw-dh"><span class="hw-dn">04</span><h3>Encapsulation</h3></div>
+        <ol class="hw-steps">
+          <li><span class="hw-n">8</span><h4>Sealed</h4><p>Label printed, card sealed in the housing you chose. The NFT chip in the label is written to the record.</p></li>
+          <li><span class="hw-n">9</span><h4>Quality checked</h4><p>Five checks on the sealed slab. A fail goes back to encapsulation.</p></li>
+          <li><span class="hw-n">10</span><h4>Slab imaged</h4><p>The finished slab, front and back, grade masked.</p></li>
+        </ol>
+      </div>
+      <div class="hw-dept rv">
+        <div class="hw-dh"><span class="hw-dn">05</span><h3>Fulfillment</h3></div>
+        <ol class="hw-steps">
+          <li><span class="hw-n">11</span><h4>Ready</h4><p>Every card in your submission is in. A second person counts it. You are notified.</p></li>
+          <li class="hw-you"><span class="hw-n">12</span><h4>The Reveal</h4><p>Turn each slab over live. Then decide, per card: ship home, list, or vault. 7 days.</p></li>
+          <li><span class="hw-n">13</span><h4>Dispatched</h4><p>Ship home cards are packed and tracked. List and vault cards stay with us, in your record.</p></li>
+        </ol>
+      </div>
+    </div>
+    <p class="hw-legend rv"><svg class="ico" aria-hidden="true"><use href="#i-eyeoff"/></svg>Grade hidden from step 6 until the Reveal, so every customer sees it the same way.</p>
+  </div>
+</section>
+
+<section class="sec ink" id="moments" aria-labelledby="hw-mo-title">
+  <div class="wrap">
+    <div class="sec-head split rv">
+      <div><p class="eb">What you see, when</p><h2 class="h2" id="hw-mo-title">Five moments, <span class="red">on camera.</span></h2></div>
+      <p class="lede">Status at every step. Photos and video at the moments that matter.</p>
+    </div>
+    <ol class="hw-mo">
+      <li class="rv"><figure><img src="./assets/gen/arrival-box.webp" alt="A shipping box on the receiving desk" width="720" height="964" loading="lazy"></figure><span class="hw-mo-n">01</span><h3>Your box, on arrival</h3><p>Photographed as delivered, condition recorded.</p></li>
+      <li class="rv"><figure><img src="./assets/gen/unboxing-still.webp" alt="A gloved hand lifting a card from an opened box" width="720" height="964" loading="lazy"></figure><span class="hw-mo-n">02</span><h3>The unboxing</h3><p>Opened on camera against your list. Every card barcoded.</p></li>
+      <li class="rv"><figure><img src="./assets/gen/centering.webp" alt="A card scanned on a measuring grid" width="800" height="800" loading="lazy"></figure><span class="hw-mo-n">03</span><h3>Every card, imaged</h3><p>High resolution front and back, the images your report is built on.</p></li>
+      <li class="rv"><figure class="hw-mo-slab"><img src="./assets/pack/how/slab-sealed.webp" alt="The back of a sealed HGA Glass slab, subgrades masked" width="760" height="1278" loading="lazy"></figure><span class="hw-mo-n">04</span><h3>The finished slab</h3><p>Front and back, sealed, grade masked.</p></li>
+      <li class="rv"><figure class="hw-mo-slab"><img src="./assets/pack/how/slab-revealed.webp" alt="The front of an HGA Glass slab showing a grade of 10" width="760" height="1278" loading="lazy"></figure><span class="hw-mo-n">05</span><h3>The Reveal</h3><p>Turn each slab over live. Grade, subgrades and the full Grade Report.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec" id="portal" aria-labelledby="hw-po-title">
+  <div class="wrap">
+    <div class="sec-head split rv">
+      <div><p class="eb">Your portal &middot; with the HGA app in 2027</p><h2 class="h2" id="hw-po-title">One place for every card <span class="red">you've ever sent us.</span></h2></div>
+      <p class="lede">Every card, every step, every image, every report. From the first order to the Reveal and after.</p>
+    </div>
+
+    <figure class="hw-app rv" aria-label="Preview of the My cards screen in the HGA app">
+      <div class="hw-app-bar" aria-hidden="true"><i></i><i></i><i></i><span>app.ucollect.com</span></div>
+      <div class="hw-app-nav" aria-hidden="true">
+        <img src="./assets/hybrid_grading/hga-2700a46b.svg" alt="" width="58" height="14">
+        <span class="on">My cards</span><span>Orders</span><span>Reports</span><span>Support</span><span>Account</span>
+      </div>
+      <div class="hw-tbl" role="table" aria-label="Sample cards">
+        <div class="hw-tr hw-th" role="row"><span role="columnheader">Card</span><span role="columnheader">Department</span><span role="columnheader">Last event</span><span role="columnheader"><span class="sr">Action</span></span></div>
+        <div class="hw-tr" role="row">
+          <div class="hw-c" role="cell"><img src="./assets/pack/how/portal-ohtani.webp" alt="" width="480" height="787" loading="lazy"><p><b>Shohei Ohtani &middot; Superfractor 1/1</b><small>2025 Topps Finest Headliners #HL-1 &middot; HGA Glass</small></p></div>
+          <div role="cell"><b class="hw-dep">Grading</b><small>Step 6 &middot; Graded blind</small></div>
+          <div role="cell"><span>Centering measured</span><small>Both sides</small></div>
+          <div role="cell"><span class="hw-pill">Open</span></div>
+        </div>
+        <div class="hw-tr hot" role="row">
+          <div class="hw-c" role="cell"><img src="./assets/pack/how/portal-rayquaza.webp" alt="" width="480" height="787" loading="lazy"><p><b>Rayquaza GX</b><small>Pok&eacute;mon &middot; HGA Glass</small></p></div>
+          <div role="cell"><b class="hw-dep red">Ready</b><small>Step 12 &middot; The Reveal</small></div>
+          <div role="cell"><span>Ready for your Reveal</span><small>1 card</small></div>
+          <div role="cell"><span class="hw-pill red">Reveal</span></div>
+        </div>
+        <div class="hw-tr" role="row">
+          <div class="hw-c" role="cell"><img src="./assets/pack/how/portal-meowth.webp" alt="" width="480" height="787" loading="lazy"><p><b>Meowth ex</b><small>Pok&eacute;mon &middot; HGA Glass &middot; 10</small></p></div>
+          <div role="cell"><b class="hw-dep">Vaulted</b><small>Step 13 &middot; Dispatched</small></div>
+          <div role="cell"><span>In your vault</span><small>Cert HGA-2026-0000388</small></div>
+          <div role="cell"><span class="hw-pill">Report</span></div>
+        </div>
+      </div>
+      <figcaption class="hw-cap">A preview of the HGA app, launching in 2027. Sample cards. Nothing here is live yet.</figcaption>
+    </figure>
+
+    <ol class="hw-three">
+      <li class="rv"><h3>Every image and video</h3><p>Your box on arrival, the unboxing video with a timecode for every card, the front and back scans, the finished slab.</p></li>
+      <li class="rv"><h3>Every report and cert</h3><p>The full Grade Report for every card, with its cert and its permanent record. Shareable by link, verifiable by NFT chip.</p></li>
+      <li class="rv"><h3>Every decision, in one place</h3><p>Ship home, list, or vault, per card, from the Reveal. Exceptions and support on the same card.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec white" id="live" aria-labelledby="hw-live-title">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eb">If something comes up</p>
+      <h2 class="h2" id="hw-live-title">You see it <span class="red">live.</span></h2>
+    </div>
+    <div class="hw-live">
+      <div class="hw-lc rv">
+        <h3>Exceptions, the moment they open</h3>
+        <p>A card not on your list, a case size to confirm, a value to declare: it opens in your portal the moment it is found, with what it is and who is on it. You answer from the portal.</p>
+        <div class="hw-note" aria-label="Example exception">
+          <b>Extra card in your box</b>
+          <p>One card not on your list, held on camera. Pick a housing to add it, or we return it with your order.</p>
+        </div>
+      </div>
+      <div class="hw-lc rv">
+        <h3>Support, tied to the card</h3>
+        <p>Every question starts from the card or the order in your portal, so support sees exactly what you see. Notifications in the portal by default. Email and SMS for delivery, Reveal ready, exceptions and shipment are yours to turn on.</p>
+        <div class="hw-note" aria-label="Example support thread">
+          <b>From the Grade Report</b>
+          <p>Open the finding, ask the question. The reply lands on the same card.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec ink" id="nft" aria-labelledby="hw-nft-title">
+  <div class="wrap hw-nft">
+    <div class="hw-nft-vis rv">
+      <img class="hw-nft-photo" src="./assets/gen/chip-tap.webp" alt="A phone reading the label of an HGA Glass slab" width="1200" height="896" loading="lazy">
+      <div class="hw-label">
+        <span class="hw-tap"><i aria-hidden="true"></i>Tap to verify</span>
+        <img src="./assets/pack/how/label-front.webp" alt="HGA Glass front label as sealed, grade 10, with the NFT chip inside" width="900" height="331" loading="lazy">
+      </div>
+      <p class="hw-cap">Front label &middot; as sealed &middot; NFT chip inside</p>
+    </div>
+    <div class="hw-nft-copy">
+      <p class="eb rv">NFT chip &middot; every label</p>
+      <h2 class="h2 rv" id="hw-nft-title">Tap the label, <span class="red">open the record.</span></h2>
+      <ul class="hw-nft-list">
+        <li class="rv"><div><h3>Written at sealing</h3><p>The NFT chip in the label is written to the record at step 8. Label, record and card verified at step 9. Final images at step 10.</p></div></li>
+        <li class="rv"><div><h3>Can't be swapped</h3><p>A swapped label or case won't match its permanent record.</p></div></li>
+        <li class="rv hw-warn"><div><h3>Verify before you buy</h3><p>A matching cert number does not by itself prove a slab. Tap the NFT chip in the label to open the record, compare the card in front of you with the images, and buy from sellers you trust.</p></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="reveal" aria-labelledby="hw-rv-title">
+  <div class="wrap hw-rv">
+    <div class="hw-rv-copy">
+      <p class="eb rv">Step 12 &middot; The Reveal</p>
+      <h2 class="h2 rv" id="hw-rv-title">Turn each slab <span class="red">over live.</span></h2>
+      <p class="lede rv">Grades are shown at the Reveal, not before. You see the sealed slab first, grade masked. Turn it over live, see the grade, the subgrades and the full Grade Report. Then decide, within 7 days.</p>
+      <ul class="hw-dec rv">
+        <li><b>Ship home</b><span>Packed and tracked to you.</span></li>
+        <li><b>List</b><span>List it for sale. The card stays with us.</span></li>
+        <li><b>Vault</b><span>Kept with us, in your record.</span></li>
+      </ul>
+      <p class="hw-rule rv">Per card. No decision in 7 days and every card ships back to you.</p>
+      <p class="rv"><a class="btn lg" href="the-reveal.html">Try the Reveal <svg class="ico"><use href="#i-arrow"/></svg></a></p>
+    </div>
+    <a class="hw-rv-vis rv" href="the-reveal.html" aria-label="Try the Reveal demo">
+      <img class="s1" src="./assets/pack/how/slab-sealed.webp" alt="" width="760" height="1278" loading="lazy">
+      <img class="s2" src="./assets/pack/how/slab-revealed.webp" alt="" width="760" height="1278" loading="lazy">
+    </a>
+  </div>
+</section>
+
+<section class="endcta" data-sbar-stop>
+  <div class="wrap">
+    <div>
+      <p class="eb" style="color:rgba(255,255,255,.6)">Grading begins Feb 1, 2027</p>
+      <h2 class="h2">Follow your cards<br><span class="red">through every step.</span></h2>
+      <p class="lede">A live tracker from delivery to the Reveal, with the moments that matter on camera. Support built in.</p>
+      <div class="acts"><a class="btn lg" href="shop.html#hero">Claim Your Slot <svg class="ico"><use href="#i-arrow"/></svg></a><a class="btn ghost inv lg" href="report.html">See a sample Grade Report</a></div>
+    </div>
+    <div class="fan" aria-hidden="true">
+      <img src="./slabs/meowth/720.webp" alt="" width="720" height="1207" loading="lazy">
+      <img src="./slabs/ohtani/720.webp" alt="" width="720" height="1207" loading="lazy">
+      <img src="./slabs/alakazam/720.webp" alt="" width="720" height="1207" loading="lazy">
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="foot" data-sbar-stop>
+  <div class="wrap">
+    <div class="top">
+      <div class="lockup">
+        <img src="./assets/hybrid_grading/hga-hybrid-grading-approach-104fc1af.svg" alt="HGA, Hybrid Grading Approach" width="180" height="55">
+        <p>Graded blind to a published standard. Every grade explained. Every card housed. All sports. All TCG.</p>
+        <div class="marks">
+          <img src="./assets/hybrid_grading/hga-poly-69885480.svg" alt="HGA Poly" width="72" height="13">
+          <img src="./assets/hybrid_grading/hga-glass-828ebfd2.svg" alt="HGA Glass" width="80" height="13">
+        </div>
+      </div>
+      <div>
+        <h4>Presale</h4>
+        <ul>
+          <li><a href="shop.html#hero">Claim your slot</a></li>
+          <li><a href="pass.html">Grading slot</a></li>
+          <li><a href="cart.html">Cart</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Grading</h4>
+        <ul>
+          <li><a href="how-it-works.html">How it works</a></li>
+          <li><a href="grading-standards.html">Grading standards</a></li>
+          <li><a href="grade-report.html">The Grade Report</a></li>
+          <li><a href="report.html">Sample Grade Report</a></li>
+          <li><a href="the-reveal.html">The Reveal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About HGA</a></li>
+          <li><a href="legacy.html">Legacy HGA</a></li>
+          <li><a href="legacy.html#lookup">Cert lookup</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="knowledge-base.html">Knowledge base</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>&copy; 2026 HGA &middot; Hybrid Grading Approach &middot; A uCollect company &middot; Chandler, Arizona</span>
+      <span><a href="#">Presale terms</a> &middot; <a href="#">Terms</a> &middot; <a href="#">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
