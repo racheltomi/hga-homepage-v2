@@ -223,10 +223,12 @@
   .gx-intro{grid-template-columns:1fr}
   .gx-hero{order:-1;height:clamp(360px,95vw,480px)}
   .gx-slab{width:min(250px,58%)}
-  .gx-shelf{align-items:flex-start;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:18px;max-width:none;margin-left:calc(-1*clamp(16px,4.5vw,48px));margin-right:calc(-1*clamp(16px,4.5vw,48px));padding:20px clamp(16px,4.5vw,48px) 10px;scrollbar-width:none}
-  .gx-shelf::-webkit-scrollbar{display:none}
+  .gx-shelf{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:28px 18px;max-width:520px;margin:32px auto 0;padding:0}
   .gx-shelf::before,.gx-shelf::after{display:none}
-  .gx-shelf li{flex:0 0 44%;scroll-snap-align:center;transform:none!important}
+  .gx-shelf li{gap:12px;transform:none!important}
+  .gx-shelf img{max-width:100%}
+  .gx-shelf span{font-size:13px}
+  .gx-shelf span b{font-size:14.5px}
 }
 @media (max-width:480px){
   .gx-tag{font-size:12px;padding:7px 11px}
