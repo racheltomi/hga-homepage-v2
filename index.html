@@ -352,7 +352,7 @@
 /* live effects (run only while the cards are on screen) */
 .pc-fx{position:absolute;inset:0;z-index:2;pointer-events:none}
 .pc-fx i{position:absolute;display:block}
-.pc[data-fx="sheen"] .pc-media img{object-position:50% 78%}
+.pc[data-fx="sheen"] .pc-media img{object-position:50% 40%}
 .pc[data-fx="sheen"] .pc-fx i:first-child{inset:-20% -60%;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.22) 50%,transparent 58%);transform:translateX(-60%)}
 .pcx.live .pc[data-fx="sheen"] .pc-fx i:first-child{animation:pcSheen 4.8s cubic-bezier(.4,0,.2,1) infinite}
 @keyframes pcSheen{0%,55%{transform:translateX(-60%)}100%{transform:translateX(60%)}}
@@ -570,7 +570,7 @@
     <div class="pcx" data-pcx>
       <a class="pc" href="#glass" data-fx="sheen">
         <div class="pc-in">
-          <div class="pc-media"><img src="./assets/gen/glass-card.webp" alt="Gloved hands holding a card in an HGA Glass housing" width="1200" height="896" loading="lazy"><span class="pc-fx" aria-hidden="true"><i></i><i></i><i></i></span></div>
+          <div class="pc-media"><img src="./assets/photos/glass-in-hand-900.webp" srcset="./assets/photos/glass-in-hand-600.webp 600w, ./assets/photos/glass-in-hand-900.webp 900w" sizes="(max-width:900px) 480px, 380px" alt="Gloved hands holding a booklet card in an HGA Glass housing" width="900" height="1199" loading="lazy"><span class="pc-fx" aria-hidden="true"><i></i><i></i><i></i></span></div>
           <span class="pc-glare" aria-hidden="true"></span>
           <span class="pc-num" aria-hidden="true">01</span>
           <div class="pc-body"><b class="pc-t">Aerospace glass</b><p>The industry's first glass card housing, built to protect your card and show it off.</p><span class="pc-more">Explore HGA Glass <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
